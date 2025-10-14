@@ -10,12 +10,9 @@ export default function Home() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Offres casino recommandées</h1>
-        <p className="text-foreground/70 mt-2">
-          Découvrez une sélection d’offres. Cliquez sur une bannière pour accéder à la
-          promotion.
-        </p>
+      <div className="sr-only">
+        <h1>Offres casino recommandées</h1>
+        <p>Découvrez une sélection d’offres. Cliquez sur une bannière pour accéder à la promotion.</p>
       </div>
 
       {/* 1ère bannière en grand */}
@@ -26,7 +23,7 @@ export default function Home() {
       )}
 
       {/* 2 suivantes côte à côte sur grand écran */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-start">
         {banners.slice(1, 3).map((b) => (
           <BannerCard key={b.id} banner={b} utm={defaultUtm} />
         ))}
