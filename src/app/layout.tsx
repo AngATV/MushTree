@@ -38,14 +38,11 @@ export default function RootLayout({
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased light`}>
         <div className="min-h-dvh flex flex-col">
-          <header className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-black/5">
-            <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-              <div className="text-base font-semibold tracking-tight">MushTree</div>
-            </div>
-          </header>
+          {/* En-tête minimal sans marque visible */}
+          <header className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-black/5" />
           <main className="flex-1">{children}</main>
           <footer className="border-t border-black/5">
-            <div className="mx-auto max-w-7xl px-4 py-6 text-sm text-neutral-600">
+            <div className="mx-auto max-w-7xl px-4 py-6 text-sm text-neutral-600 text-center">
               © {new Date().getFullYear()} MushTree
             </div>
           </footer>
