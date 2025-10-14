@@ -5,6 +5,9 @@
   --foreground: #171717;
 }
 
+/* Activer le variant Tailwind `dark:` basé sur la classe .dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Autoriser le basculement manuel via la classe .dark sur <html> */
 .dark {
   --background: #0a0a0a;
