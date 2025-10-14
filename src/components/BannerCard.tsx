@@ -28,8 +28,7 @@ export default function BannerCard({
       target="_blank"
       rel="nofollow noopener noreferrer"
       className={
-        `group relative block overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 ` +
-        `shadow-sm hover:shadow-md transition will-change-transform hover:-translate-y-0.5 ` +
+        `group relative block overflow-hidden transition will-change-transform hover:-translate-y-0.5 ` +
         `focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20`
       }
     >
