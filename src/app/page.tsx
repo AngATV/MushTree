@@ -17,15 +17,15 @@ export default function Home() {
 
       {/* 1ère bannière en grand */}
       {banners[0] && (
-        <div className="mb-4">
-          <BannerCard banner={banners[0]} utm={defaultUtm} variant="md" />
+        <div className="mb-5">
+          <BannerCard banner={banners[0]} utm={defaultUtm} variant="lg" />
         </div>
       )}
 
       {/* 2 suivantes côte à côte sur grand écran */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 items-start">
         {banners.slice(1, 3).map((b) => (
-          <BannerCard key={b.id} banner={b} utm={defaultUtm} />
+          <BannerCard key={b.id} banner={b} utm={defaultUtm} variant="md" />
         ))}
       </div>
     </section>

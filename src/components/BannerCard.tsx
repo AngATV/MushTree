@@ -17,17 +17,17 @@ export default function BannerCard({
   const isLarge = variant === "lg";
   const isMedium = variant === "md";
   const imageHeightClass = isLarge
-    ? "h-44 sm:h-52"
+    ? "h-56 sm:h-64" // plus grand pour la bannière principale
     : isMedium
-    ? "h-36 sm:h-40"
-    : "h-28 sm:h-32";
+    ? "h-44 sm:h-48" // plus grand qu'avant pour meilleure visibilité
+    : "h-36 sm:h-40";
   return (
     <a
       href={href}
       target="_blank"
       rel="nofollow noopener noreferrer"
       className={
-        `group relative block overflow-hidden rounded-xl border border-black/10 dark:border-white/10 ` +
+        `group relative block overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 ` +
         `shadow-sm hover:shadow-md transition will-change-transform hover:-translate-y-0.5 ` +
         `focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20`
       }
