@@ -9,14 +9,14 @@ export default function Home() {
   } as const;
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+    <section className="mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <div className="sr-only">
         <h1>Offres casino recommandées</h1>
         <p>Découvrez une sélection d’offres. Cliquez sur une bannière pour accéder à la promotion.</p>
       </div>
 
       {/* 3 colonnes sur desktop, 1 colonne sur mobile */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
         {banners.map((b) => (
           <BannerCard key={b.id} banner={b} utm={defaultUtm} variant="md" />
         ))}

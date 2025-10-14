@@ -21,14 +21,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const initial = getPreferredTheme();
     setTheme(initial);
     const root = document.documentElement;
+    root.classList.remove("dark", "light");
     if (initial === "dark") root.classList.add("dark");
-    else root.classList.remove("dark");
+    else root.classList.add("light");
   }, []);
 
   useEffect(() => {
     const root = document.documentElement;
+    root.classList.remove("dark", "light");
     if (theme === "dark") root.classList.add("dark");
-    else root.classList.remove("dark");
+    else root.classList.add("light");
     window.localStorage.setItem("theme", theme);
   }, [theme]);
 
