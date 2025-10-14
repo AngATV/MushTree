@@ -18,8 +18,16 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {banners.map((b) => (
+      {/* 1ère bannière en grand */}
+      {banners[0] && (
+        <div className="mb-6">
+          <BannerCard banner={banners[0]} utm={defaultUtm} variant="lg" />
+        </div>
+      )}
+
+      {/* 2 suivantes côte à côte sur grand écran */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        {banners.slice(1, 3).map((b) => (
           <BannerCard key={b.id} banner={b} utm={defaultUtm} />
         ))}
       </div>
