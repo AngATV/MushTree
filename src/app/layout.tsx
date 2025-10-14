@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,23 +36,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider>
-          <div className="min-h-dvh flex flex-col">
-            <header className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b border-black/5 dark:border-white/10">
-              <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-                <div className="text-base font-semibold tracking-tight">MushTree</div>
-                <ThemeToggle />
-              </div>
-            </header>
-            <main className="flex-1">{children}</main>
-            <footer className="border-t border-black/5 dark:border-white/10">
-              <div className="mx-auto max-w-6xl px-4 py-6 text-sm text-foreground/70">
-                © {new Date().getFullYear()} MushTree
-              </div>
-            </footer>
-          </div>
-        </ThemeProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased light`}>
+        <div className="min-h-dvh flex flex-col">
+          <header className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-black/5">
+            <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+              <div className="text-base font-semibold tracking-tight">MushTree</div>
+            </div>
+          </header>
+          <main className="flex-1">{children}</main>
+          <footer className="border-t border-black/5">
+            <div className="mx-auto max-w-7xl px-4 py-6 text-sm text-neutral-600">
+              © {new Date().getFullYear()} MushTree
+            </div>
+          </footer>
+        </div>
       </body>
     </html>
   );

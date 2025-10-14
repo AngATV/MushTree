@@ -15,9 +15,14 @@ export default function Home() {
         <p>Découvrez une sélection d’offres. Cliquez sur une bannière pour accéder à la promotion.</p>
       </div>
 
-      {/* 3 colonnes sur desktop, 1 colonne sur mobile */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
-        {banners.map((b) => (
+      {/* Mettre en avant Betify en grand, puis 2 bannières en dessous côte à côte */}
+      {banners[0] && (
+        <div className="mb-6">
+          <BannerCard banner={banners[0]} utm={defaultUtm} variant="lg" />
+        </div>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
+        {banners.slice(1, 3).map((b) => (
           <BannerCard key={b.id} banner={b} utm={defaultUtm} variant="md" />
         ))}
       </div>
