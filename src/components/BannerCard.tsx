@@ -11,17 +11,20 @@ export default function BannerCard({
 }: {
   banner: Banner;
   utm: UTMParams;
-  variant?: "md" | "lg";
+  variant?: "sm" | "md" | "lg" | "xl";
 }) {
   const href = appendUtm(banner.href, utm);
   const isLarge = variant === "lg";
   const isMedium = variant === "md";
-  // Format bannière plus compact et uniforme
-  const imageHeightClass = isLarge
+  const isXL = variant === "xl";
+  // Tailles relevées pour plus de présence visuelle
+  const imageHeightClass = isXL
+    ? "h-[26rem] lg:h-[30rem]"
+    : isLarge
     ? "h-80 lg:h-96"
     : isMedium
-    ? "h-56 lg:h-64"
-    : "h-48 lg:h-56";
+    ? "h-72 lg:h-80"
+    : "h-56 lg:h-64";
   return (
     <a
       href={href}
