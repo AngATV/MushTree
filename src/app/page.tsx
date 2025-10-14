@@ -18,7 +18,7 @@ export default function Home() {
       {/* Mettre en avant Betify en grand, puis 2 bannières en dessous côte à côte */}
       {banners[0] && (
         <div className="mb-6">
-          <BannerCard banner={banners[0]} utm={defaultUtm} variant="xl" />
+          <BannerCard banner={banners[0]} utm={defaultUtm} variant="lg" />
         </div>
       )}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
