@@ -18,10 +18,10 @@ export default function BannerCard({
   const isMedium = variant === "md";
   // Format bannière plus compact et uniforme
   const imageHeightClass = isLarge
-    ? "h-44 sm:h-52"
+    ? "h-56 sm:h-64"
     : isMedium
-    ? "h-40 sm:h-44"
-    : "h-36 sm:h-40";
+    ? "h-48 sm:h-56"
+    : "h-40 sm:h-48";
   return (
     <a
       href={href}

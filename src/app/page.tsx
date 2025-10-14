@@ -15,8 +15,8 @@ export default function Home() {
         <p>Découvrez une sélection d’offres. Cliquez sur une bannière pour accéder à la promotion.</p>
       </div>
 
-      {/* Empiler toutes les bannières en format adapté */}
-      <div className="flex flex-col gap-4 sm:gap-5">
+      {/* 3 colonnes sur desktop, 1 colonne sur mobile */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
         {banners.map((b) => (
           <BannerCard key={b.id} banner={b} utm={defaultUtm} variant="md" />
         ))}
