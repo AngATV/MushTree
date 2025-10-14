@@ -16,10 +16,11 @@ export default function BannerCard({
   const href = appendUtm(banner.href, utm);
   const isLarge = variant === "lg";
   const isMedium = variant === "md";
+  // Format bannière plus compact et uniforme
   const imageHeightClass = isLarge
-    ? "h-56 sm:h-64" // plus grand pour la bannière principale
+    ? "h-44 sm:h-52"
     : isMedium
-    ? "h-44 sm:h-48" // plus grand qu'avant pour meilleure visibilité
+    ? "h-40 sm:h-44"
     : "h-36 sm:h-40";
   return (
     <a

@@ -15,16 +15,9 @@ export default function Home() {
         <p>Découvrez une sélection d’offres. Cliquez sur une bannière pour accéder à la promotion.</p>
       </div>
 
-      {/* 1ère bannière en grand */}
-      {banners[0] && (
-        <div className="mb-5">
-          <BannerCard banner={banners[0]} utm={defaultUtm} variant="lg" />
-        </div>
-      )}
-
-      {/* 2 suivantes côte à côte sur grand écran */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 items-start">
-        {banners.slice(1, 3).map((b) => (
+      {/* Empiler toutes les bannières en format adapté */}
+      <div className="flex flex-col gap-4 sm:gap-5">
+        {banners.map((b) => (
           <BannerCard key={b.id} banner={b} utm={defaultUtm} variant="md" />
         ))}
       </div>
