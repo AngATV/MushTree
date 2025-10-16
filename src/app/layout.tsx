@@ -40,7 +40,27 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
 
           <footer className="border-t border-white/10">
-            <div className="container py-6 text-center text-sm text-white/60">© 2025</div>
+            <div className="container py-8 text-sm text-white/70 grid gap-6 md:grid-cols-3">
+              <div>
+                <div className="font-semibold mb-2">MushTree</div>
+                <p className="text-white/60">Offres casino sélectionnées. Suivi des clics et tableau admin.</p>
+              </div>
+              <div>
+                <div className="font-semibold mb-2">Liens</div>
+                <ul className="space-y-1">
+                  <li><a href="/" className="hover:underline">Offres</a></li>
+                  <li><a href="/admin" className="hover:underline">Admin</a></li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-semibold mb-2">Légal</div>
+                <ul className="space-y-1">
+                  <li><a href="#" className="hover:underline">Mentions légales</a></li>
+                  <li><a href="#" className="hover:underline">Contact</a></li>
+                </ul>
+              </div>
+              <div className="md:col-span-3 text-center text-white/50">© 2025</div>
+            </div>
           </footer>
         </div>
       </body>
