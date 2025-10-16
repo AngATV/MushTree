@@ -14,6 +14,11 @@ export async function ensureSchema() {
     link_url TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
   );`;
+  // Colonnes étendues pour les offres
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT FALSE;`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS category TEXT;`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS position INT DEFAULT 0;`;
   await sql`CREATE TABLE IF NOT EXISTS clicks (
     id TEXT PRIMARY KEY,
     banner_id TEXT NOT NULL REFERENCES banners(id) ON DELETE CASCADE,
