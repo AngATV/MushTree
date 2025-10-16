@@ -25,7 +25,8 @@
     "ts-node": "^10.9.2",
     "@types/node": "^20.16.11",
     "@types/react": "^18.3.11",
-    "@types/bcrypt": "^5.0.2"
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.6"
   },
   "engines": {
     "node": ">=18.17.0"
