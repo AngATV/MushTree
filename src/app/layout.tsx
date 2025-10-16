@@ -12,9 +12,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <div className="min-h-dvh flex flex-col">
           {/* Header */}
-          <header className="sticky top-0 z-20 border-b border-white/10 bg-black/60 backdrop-blur">
+          <header className="sticky top-0 z-20 border-b border-white/10 bg-[#07161b]/70 backdrop-blur">
             <div className="container py-3 flex items-center justify-between">
-              <div className="text-lg font-semibold">mushway.bet</div>
+              <div className="text-lg font-semibold text-emerald-300">mushway.bet</div>
               <nav className="hidden sm:flex gap-4 text-sm text-white/80">
                 <a href="/" className="hover:text-white">Offres</a>
               </nav>
