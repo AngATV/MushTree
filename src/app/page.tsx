@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       {featured.length ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           <div className="lg:col-span-2">
-            <BannerCard href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority />
+            <BannerCard href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority badge="Offre mise en avant" />
           </div>
           <div className="grid grid-cols-1 gap-6">
             {featured.slice(1, 3).map((b) => (
