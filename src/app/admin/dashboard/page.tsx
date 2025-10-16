@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { sql } from "@vercel/postgres";
 import { getAuthUserFromCookies } from "@/lib/auth";
 import { AdminBannerForm } from "@/components/AdminBannerForm";
 
@@ -11,9 +11,11 @@ export default async function DashboardPage() {
       </div>
     );
   }
-  const banners = await prisma.banner.findMany({ orderBy: { createdAt: "desc" } });
-  const stats = await prisma.clickEvent.groupBy({ by: ["bannerId"], _count: { bannerId: true } });
-  const countById = Object.fromEntries(stats.map(s => [s.bannerId, s._count.bannerId]));
+  const { rows: banners } = await sql<{ id: string; title: string; imageUrl: string; linkUrl: string; createdAt: string }>`
+    SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", created_at AS "createdAt" FROM banners ORDER BY created_at DESC`;
+  const { rows: stats } = await sql<{ bannerId: string; count: number }>`
+    SELECT banner_id AS "bannerId", COUNT(*)::int AS "count" FROM clicks GROUP BY banner_id`;
+  const countById = Object.fromEntries(stats.map(s => [s.bannerId, s.count]));
 
   return (
     <div className="container py-10 space-y-8">

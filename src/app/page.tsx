@@ -1,8 +1,10 @@
-import { prisma } from "@/lib/prisma";
+import { sql } from "@vercel/postgres";
 import { BannerCard } from "@/components/BannerCard";
 
 export default async function Home() {
-  const banners = await prisma.banner.findMany({ orderBy: { createdAt: "desc" } });
+  const { rows: banners } = await sql<{ id: string; title: string; imageUrl: string; linkUrl: string; createdAt: string }>`
+    SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", created_at AS "createdAt" FROM banners ORDER BY created_at DESC
+  `;
   const [first, ...rest] = banners;
   return (
     <section className="container py-10">
