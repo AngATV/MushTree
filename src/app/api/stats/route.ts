@@ -1,11 +1,8 @@
-import { prisma } from "@/lib/prisma";
+import { sql } from "@vercel/postgres";
 
 export async function GET() {
-  const stats = await prisma.clickEvent.groupBy({
-    by: ["bannerId"],
-    _count: { bannerId: true },
-  });
-  return Response.json(stats);
+  const { rows } = await sql`SELECT banner_id AS "bannerId", COUNT(*)::int AS "count" FROM clicks GROUP BY banner_id`;
+  return Response.json(rows);
 }
 
 

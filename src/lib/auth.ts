@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { prisma } from "@/lib/prisma";
+import { sql } from "@vercel/postgres";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 const COOKIE_NAME = "admin_token";
@@ -33,7 +33,8 @@ export async function getAuthUserFromCookies() {
   if (!token) return null;
   const payload = verifyJwt(token);
   if (!payload) return null;
-  const user = await prisma.user.findUnique({ where: { id: payload.userId } });
+  const { rows } = await sql<{ id: string; email: string }>`SELECT id, email FROM users WHERE id = ${payload.userId} LIMIT 1`;
+  const user = rows[0];
   return user ? { id: user.id, email: user.email } : null;
 }
 
