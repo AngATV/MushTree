@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ensureSchema } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Linktree Casino",
@@ -8,7 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  await ensureSchema();
   return (
     <html lang="fr">
       <body>

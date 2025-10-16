@@ -1,7 +1,12 @@
 import { getAuthUserFromCookies } from "@/lib/auth";
 import { sql } from "@vercel/postgres";
+import { ensureSchema } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
+  await ensureSchema();
   const { rows } = await sql`SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", created_at AS "createdAt" FROM banners ORDER BY created_at DESC`;
   return Response.json(rows);
 }

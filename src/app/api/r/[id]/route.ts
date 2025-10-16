@@ -1,6 +1,11 @@
 import { sql } from "@vercel/postgres";
+import { ensureSchema } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
+  await ensureSchema();
   const { rows } = await sql<{ id: string; link_url: string }>`SELECT id, link_url FROM banners WHERE id=${params.id} LIMIT 1`;
   const banner = rows[0];
   if (!banner) return new Response("Not Found", { status: 404 });
