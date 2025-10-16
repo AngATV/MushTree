@@ -14,7 +14,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {/* Header */}
           <header className="sticky top-0 z-20 border-b border-white/10 bg-black/60 backdrop-blur">
             <div className="container py-3 flex items-center justify-between">
-              <div className="text-lg font-semibold">MushTree</div>
+              <div className="text-lg font-semibold">mushway.bet</div>
               <nav className="hidden sm:flex gap-4 text-sm text-white/80">
                 <a href="/" className="hover:text-white">Offres</a>
               </nav>
@@ -40,8 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <footer className="border-t border-white/10">
             <div className="container py-8 text-sm text-white/70 grid gap-6 md:grid-cols-3">
               <div>
-                <div className="font-semibold mb-2">MushTree</div>
-                <p className="text-white/60">Offres casino sélectionnées. Suivi des clics et tableau admin.</p>
+                <div className="font-semibold mb-2">mushway.bet</div>
               </div>
               <div>
                 <div className="font-semibold mb-2">Liens</div>
@@ -52,8 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <div>
                 <div className="font-semibold mb-2">Légal</div>
                 <ul className="space-y-1">
-                  <li><a href="#" className="hover:underline">Mentions légales</a></li>
-                  <li><a href="#" className="hover:underline">Contact</a></li>
+                  <li><a href="/mentions-legales" className="hover:underline">Mentions légales</a></li>
                 </ul>
               </div>
               <div className="md:col-span-3 text-center text-white/50">© 2025</div>
