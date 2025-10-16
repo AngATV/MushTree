@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export function AdminBannerForm({ onCreated }: { onCreated?: () => void }) {
+export function AdminBannerForm() {
   const [title, setTitle] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -24,7 +26,8 @@ export function AdminBannerForm({ onCreated }: { onCreated?: () => void }) {
       setTitle("");
       setImageUrl("");
       setLinkUrl("");
-      onCreated?.();
+      // Rafraîchir la page serveur pour recharger la liste
+      router.refresh();
     } catch (err: any) {
       setError(err.message ?? "Erreur inconnue");
     } finally {

@@ -22,7 +22,7 @@ export default async function DashboardPage() {
       <div>
         <h1 className="text-2xl font-semibold mb-3">Ajouter une bannière</h1>
         {/* Client form */}
-        <AdminBannerForm onCreated={() => location.reload()} />
+        <AdminBannerForm />
       </div>
 
       <div>
