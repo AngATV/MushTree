@@ -17,7 +17,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <div className="text-lg font-semibold">MushTree</div>
               <nav className="hidden sm:flex gap-4 text-sm text-white/80">
                 <a href="/" className="hover:text-white">Offres</a>
-                <a href="/admin" className="hover:text-white">Admin</a>
               </nav>
             </div>
           </header>
@@ -30,7 +29,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <div className="text-sm font-medium mb-3 text-white/70">Navigation</div>
                 <ul className="space-y-2 text-sm">
                   <li><a href="/" className="hover:underline">Toutes les offres</a></li>
-                  <li><a href="/admin" className="hover:underline">Espace admin</a></li>
                 </ul>
               </aside>
 
@@ -49,7 +47,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <div className="font-semibold mb-2">Liens</div>
                 <ul className="space-y-1">
                   <li><a href="/" className="hover:underline">Offres</a></li>
-                  <li><a href="/admin" className="hover:underline">Admin</a></li>
                 </ul>
               </div>
               <div>

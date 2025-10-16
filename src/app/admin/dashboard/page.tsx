@@ -1,6 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { getAuthUserFromCookies } from "@/lib/auth";
 import { AdminBannerForm } from "@/components/AdminBannerForm";
+import { AdminBannerItem } from "@/components/AdminBannerItem";
 
 export default async function DashboardPage() {
   const user = await getAuthUserFromCookies();
@@ -11,8 +12,8 @@ export default async function DashboardPage() {
       </div>
     );
   }
-  const { rows: banners } = await sql<{ id: string; title: string; imageUrl: string; linkUrl: string; createdAt: string }>`
-    SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", created_at AS "createdAt" FROM banners ORDER BY created_at DESC`;
+  const { rows: banners } = await sql<{ id: string; title: string; imageUrl: string; linkUrl: string; featured: boolean; category: string | null; tags: string[] | null; position: number; createdAt: string }>`
+    SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", featured, category, tags, position, created_at AS "createdAt" FROM banners ORDER BY featured DESC, position ASC, created_at DESC`;
   const { rows: stats } = await sql<{ bannerId: string; count: number }>`
     SELECT banner_id AS "bannerId", COUNT(*)::int AS "count" FROM clicks GROUP BY banner_id`;
   const countById = Object.fromEntries(stats.map(s => [s.bannerId, s.count]));
@@ -27,21 +28,14 @@ export default async function DashboardPage() {
 
       <div>
         <h2 className="text-xl font-semibold mb-3">Bannières</h2>
-        <ul className="space-y-3">
+        <div className="space-y-3">
           {banners.map(b => (
-            <li key={b.id} className="p-3 rounded bg-white/5 border border-white/10 flex items-center justify-between">
-              <div>
-                <div className="font-medium">{b.title}</div>
-                <div className="text-sm text-white/60">{b.linkUrl}</div>
-              </div>
-              <div className="text-sm">{countById[b.id] ?? 0} clics</div>
-              <form action={`/api/banners/${b.id}`} method="post" className="ml-4">
-                <input type="hidden" name="_method" value="DELETE" />
-                {/* Fallback sans JS si on implémente une route POST method override */}
-              </form>
-            </li>
+            <div key={b.id}>
+              <AdminBannerItem banner={b} />
+              <div className="text-xs text-white/50 mt-1">{countById[b.id] ?? 0} clics</div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
