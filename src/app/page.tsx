@@ -58,14 +58,11 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       </div>
 
       {featured.length ? (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-          <div className="lg:col-span-2">
-            <BannerCard href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority badge="Offre mise en avant" />
-          </div>
-          <div className="grid grid-cols-1 gap-6">
-            {featured.slice(1, 3).map((b) => (
-              <BannerCard key={b.id} href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title} />
-            ))}
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6 items-stretch">
+          {/* Menu flottant à gauche (sidebar est déjà dans layout); ici on le masque pour garder la structure du hero */}
+          <div className="hidden lg:block" />
+          <div>
+            <BannerCard variant="wide" href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority badge="Offre mise en avant" />
           </div>
         </div>
       ) : null}
@@ -73,7 +70,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       {others.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {others.map((b) => (
-            <BannerCard key={b.id} href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title} />
+            <BannerCard key={b.id} variant="square" href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title} />
           ))}
         </div>
       ) : (!featured.length ? (

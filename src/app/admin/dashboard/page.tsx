@@ -28,11 +28,11 @@ export default async function DashboardPage() {
 
       <div>
         <h2 className="text-xl font-semibold mb-3">Bannières</h2>
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {banners.map(b => (
-            <div key={b.id}>
+            <div key={b.id} className="space-y-1">
               <AdminBannerItem banner={b} />
-              <div className="text-xs text-white/50 mt-1">{countById[b.id] ?? 0} clics</div>
+              <div className="text-xs text-white/50">{countById[b.id] ?? 0} clics</div>
             </div>
           ))}
         </div>
