@@ -11,7 +11,7 @@ type Props = {
 export function BannerCard({ href, src, alt, priority, badge, variant = "wide", disabled = false }: Props) {
   return (
     <a href={disabled ? undefined : href} target={disabled ? undefined : "_blank"} rel={disabled ? undefined : "nofollow noopener noreferrer"} className={`block group ${disabled ? "pointer-events-none" : ""}`}>
-      <div className={`w-full ${variant === "square" ? "aspect-square" : "h-64 sm:h-72 lg:h-80"} flex items-center justify-center rounded-xl overflow-hidden relative`}>
+      <div className={`w-full ${variant === "square" ? "aspect-square" : "aspect-[21/9]"} flex items-center justify-center rounded-xl overflow-hidden relative`}>
         {badge ? (
           <span className="absolute left-3 top-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold text-black" style={{
             backgroundImage: "linear-gradient(135deg,#f5d36c,#f1b84a)", boxShadow: "0 2px 10px rgba(245,211,108,0.35)"

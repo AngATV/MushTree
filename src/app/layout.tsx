@@ -23,7 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           {/* Body with sidebar */}
           <div className="flex-1">
-            <div className="container py-6 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6">
+            <div className="container py-6 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
               {/* Sidebar */}
               <aside className="hidden lg:block border border-white/10 rounded-xl p-4 h-fit sticky top-[72px]">
                 <div className="text-sm font-medium mb-3 text-white/70">Navigation</div>

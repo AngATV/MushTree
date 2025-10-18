@@ -47,7 +47,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           ))}
         </div>
         {tags.length ? (
-          <div className="flex flex-wrap gap-2 items-center">
+          <div className="flex gap-2 items-center overflow-x-auto no-scrollbar py-1">
             <span className="text-sm text-white/60 mr-1">Tags:</span>
             <a href={`/${category ? `?category=${encodeURIComponent(category)}` : ''}`} className={`px-3 py-1.5 rounded-full text-sm border ${!tag ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>Tous</a>
             {tags.map((t) => (

@@ -11,6 +11,10 @@ body {
   height: 100%;
 }
 
+/* Masquer scrollbar horizontale pour les pills */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 body {
   background:
     radial-gradient(1200px 600px at 80% -10%, rgba(16,185,129,0.12), transparent 60%),
@@ -20,6 +24,6 @@ body {
 }
 
 .container {
-  @apply max-w-6xl mx-auto px-4;
+  @apply max-w-7xl mx-auto px-4;
 }
 
