@@ -7,6 +7,11 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container py-6">
+      <div className="mb-6 flex items-center gap-3 text-sm">
+        <a href="/admin/dashboard" className="px-3 py-1.5 rounded border border-white/20 hover:border-white/40">Bannières</a>
+        <a href="/admin/social" className="px-3 py-1.5 rounded border border-white/20 hover:border-white/40">Réseaux</a>
+        <a href="/admin/trackings" className="px-3 py-1.5 rounded border border-white/20 hover:border-white/40">Trackings</a>
+      </div>
       {children}
     </div>
   );

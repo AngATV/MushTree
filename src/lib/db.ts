@@ -33,6 +33,11 @@ export async function ensureSchema() {
     ip TEXT NOT NULL,
     user_agent TEXT NOT NULL
   );`;
+  // Social links
+  await sql`CREATE TABLE IF NOT EXISTS social_links (
+    platform TEXT PRIMARY KEY,
+    url TEXT NOT NULL
+  );`;
 }
 
 
