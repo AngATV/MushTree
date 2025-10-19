@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ClientSidebar from "@/components/ClientSidebar";
+import AppShell from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: "Linktree Casino",
@@ -24,10 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           {/* Body with sidebar */}
           <div className="flex-1">
-            <div className="container py-6 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
-              <ClientSidebar />
-              <main>{children}</main>
-            </div>
+            <AppShell>{children}</AppShell>
           </div>
 
           <footer className="border-t border-white/10">
