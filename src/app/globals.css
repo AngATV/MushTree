@@ -35,6 +35,16 @@ body::before {
   z-index: -1;
 }
 
+/* Overlay lumineux subtil pour éviter l'effet trop sombre */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,0.14), transparent 60%);
+  z-index: -1;
+}
+
 .container {
   @apply max-w-7xl mx-auto px-4;
 }
