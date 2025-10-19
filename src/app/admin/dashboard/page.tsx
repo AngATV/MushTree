@@ -29,8 +29,8 @@ export default async function DashboardPage() {
   const totalBanners = totalBannersRows[0]?.count ?? 0;
 
   return (
-    <div className="container py-10 space-y-8">
-      {/* Topbar stats */}
+    <div className="space-y-8">
+      {/* Tuiles stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="rounded-xl border border-white/10 bg-white/5 p-4">
           <div className="text-xs text-white/60">Bannières</div>
@@ -46,20 +46,19 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight mb-3">Administration</h1>
-        <h2 className="text-xl font-semibold mb-3">Ajouter une bannière</h2>
-        <AdminBannerForm />
+      <div className="space-y-3">
+        <h1 className="text-2xl font-semibold">Bannières</h1>
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <h2 className="text-sm font-medium mb-3">Ajouter une bannière</h2>
+          <AdminBannerForm />
+        </div>
       </div>
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Aperçu client</h2>
         {banners.length ? (
-          <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
-            <div className="hidden lg:block" />
-            <div>
-              <BannerCard variant="wide" href="#" src={(featured[0] ?? banners[0]).imageUrl} alt={(featured[0] ?? banners[0]).title} disabled />
-            </div>
+          <div className="grid grid-cols-1 gap-6">
+            <BannerCard variant="wide" href="#" src={(featured[0] ?? banners[0]).imageUrl} alt={(featured[0] ?? banners[0]).title} disabled />
           </div>
         ) : (
           <p className="text-white/60">Aucune bannière à prévisualiser.</p>
