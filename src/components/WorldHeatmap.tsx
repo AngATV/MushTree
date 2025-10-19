@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 
@@ -31,7 +30,7 @@ export default function WorldHeatmap({ countries }: { countries: Country[] }) {
     <div className="w-full overflow-hidden">
       <ComposableMap projectionConfig={{ scale: 140 }} style={{ width: "100%", height: "auto" }}>
         <Geographies geography={geoUrl}>
-          {({ geographies }) => geographies.map(geo => {
+          {({ geographies }: { geographies: any[] }) => geographies.map((geo: any) => {
             const isoA2 = (geo.properties as any).iso_a2 as string;
             return (
               <Geography
