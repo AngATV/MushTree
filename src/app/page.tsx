@@ -30,8 +30,6 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const categories = categoryRows.map(r => r.category);
   const tags = tagRows.map(r => r.tag);
   const isActive = (k: string, v: string) => (searchParams?.[k] === v);
-  const { rows: totalRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM clicks`;
-  const totalClicks = totalRows[0]?.count ?? 0;
 
   return (
     <section className="container py-10 space-y-6">
@@ -41,13 +39,12 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       </header>
 
       <div className="sticky top-16 z-10 rounded-xl border border-white/10 bg-[#07161b]/70 backdrop-blur px-3 py-3 space-y-2">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <span className="text-sm text-white/60 mr-1">Catégories:</span>
           <a href="/" className={`px-3 py-1.5 rounded-full text-sm border ${!category ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>Toutes</a>
           {categories.map((c) => (
             <a key={c} href={`/?category=${encodeURIComponent(c)}${tag ? `&tag=${encodeURIComponent(tag)}` : ''}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('category', c) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{c}</a>
           ))}
-          <div className="text-xs text-white/60 ml-auto">Total clics: {totalClicks}</div>
         </div>
         {tags.length ? (
           <div className="flex gap-2 items-center overflow-x-auto no-scrollbar py-1">
