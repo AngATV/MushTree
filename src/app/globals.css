@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground: #ECFDF5; /* émeraude pâle */
+  --foreground: #EDEBFE; /* texte clair légèrement violacé */
+  --bg-base: #0b0e19;    /* fond profond type navy */
+  --accent: #a78bfa;     /* violet (similar godmota feeling) */
 }
 
 html,
@@ -16,7 +18,7 @@ body {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 body {
-  background: #0b1216; /* fond fixe, sans variations */
+  background: var(--bg-base);
   color: var(--foreground);
 }
 
@@ -26,10 +28,10 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(1000px 400px at 15% -10%, rgba(59,130,246,0.20), transparent 60%),
-    radial-gradient(1000px 400px at 85% 110%, rgba(236,72,153,0.18), transparent 60%),
-    radial-gradient(900px 360px at 50% 50%, rgba(16,185,129,0.16), transparent 60%),
-    #0b1216;
+    radial-gradient(1000px 420px at 15% -10%, rgba(167,139,250,0.18), transparent 60%), /* violet */
+    radial-gradient(1000px 420px at 85% 110%, rgba(244,114,182,0.16), transparent 60%), /* rose */
+    radial-gradient(900px 360px at 55% 45%, rgba(34,211,238,0.14), transparent 60%),    /* cyan */
+    var(--bg-base);
   z-index: -1;
 }
 
