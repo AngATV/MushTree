@@ -113,15 +113,11 @@ export function AdminBannerForm() {
         <label className="block text-sm mb-1">Lien d'affiliation</label>
         <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} required />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 gap-3">
         <label className="inline-flex items-center gap-2">
           <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} />
           <span>Mettre en avant</span>
         </label>
-        <div>
-          <label className="block text-sm mb-1">Catégorie</label>
-          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="ex: Bonus" />
-        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
