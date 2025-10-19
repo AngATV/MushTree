@@ -6,12 +6,17 @@ type Props = {
   badge?: string;
   variant?: "wide" | "square"; // square pour la grille, wide pour le hero
   disabled?: boolean; // pour l'aperçu admin sans clic
+  depositMin?: string | null;
+  bonus?: string | null;
+  cashback?: string | null;
+  freeSpins?: string | null;
+  ctaLabel?: string | null;
 };
 
-export function BannerCard({ href, src, alt, priority, badge, variant = "wide", disabled = false }: Props) {
+export function BannerCard({ href, src, alt, priority, badge, variant = "wide", disabled = false, depositMin, bonus, cashback, freeSpins, ctaLabel }: Props) {
   return (
     <a href={disabled ? undefined : href} target={disabled ? undefined : "_blank"} rel={disabled ? undefined : "nofollow noopener noreferrer"} className={`block group ${disabled ? "pointer-events-none" : ""}`}>
-      <div className={`w-full ${variant === "square" ? "aspect-square" : "aspect-[21/9]"} flex items-center justify-center rounded-xl overflow-hidden relative`}>
+      <div className={`w-full ${variant === "square" ? "aspect-square" : "h-[20vh] md:h-[24vh] lg:h-[28vh]"} flex items-center justify-center rounded-xl overflow-hidden relative`}>
         {badge ? (
           <span className="absolute left-3 top-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold text-black" style={{
             backgroundImage: "linear-gradient(135deg,#f5d36c,#f1b84a)", boxShadow: "0 2px 10px rgba(245,211,108,0.35)"
@@ -23,6 +28,18 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
         }} />
         <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} className={`w-full h-full ${variant === "square" ? "object-cover" : "object-contain"}`} />
       </div>
+      {/* Strip infos + CTA */}
+      {variant === 'square' && (
+        <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-white/80">
+          <div className="rounded-lg border border-white/10 px-2 py-1">Dépôt: <span className="text-white">{depositMin ?? '—'}</span></div>
+          <div className="rounded-lg border border-white/10 px-2 py-1">Bonus: <span className="text-white">{bonus ?? '—'}</span></div>
+          <div className="rounded-lg border border-white/10 px-2 py-1">Cashback: <span className="text-white">{cashback ?? '—'}</span></div>
+          <div className="rounded-lg border border-white/10 px-2 py-1">Free Spins: <span className="text-white">{freeSpins ?? '—'}</span></div>
+          <a className="col-span-2 sm:col-span-4 mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-400 text-black font-semibold px-3 py-2" href={href}>
+            {ctaLabel ?? 'Récupérer mon Bonus'}
+          </a>
+        </div>
+      )}
     </a>
   );
 }

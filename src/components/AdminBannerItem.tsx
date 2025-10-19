@@ -23,6 +23,11 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
   const [category, setCategory] = useState<string>(banner.category ?? "");
   const [tags, setTags] = useState<string>((banner.tags ?? []).join(", "));
   const [position, setPosition] = useState<number>(banner.position ?? 0);
+  const [depositMin, setDepositMin] = useState<string>((banner as any).depositMin ?? "");
+  const [bonus, setBonus] = useState<string>((banner as any).bonus ?? "");
+  const [cashback, setCashback] = useState<string>((banner as any).cashback ?? "");
+  const [freeSpins, setFreeSpins] = useState<string>((banner as any).freeSpins ?? "");
+  const [ctaLabel, setCtaLabel] = useState<string>((banner as any).ctaLabel ?? "Récupérer mon Bonus");
   const [loading, setLoading] = useState(false);
 
   async function save() {
@@ -31,7 +36,7 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position }),
+      body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel }),
     });
     setLoading(false);
     router.refresh();
@@ -66,6 +71,13 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
           </label>
           <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="tags, séparés, par virgules" />
           <input type="number" className="px-3 py-2 rounded bg-white/10 border border-white/20" value={position} onChange={(e) => setPosition(parseInt(e.target.value || '0', 10))} />
+        </div>
+        <div className="grid md:grid-cols-3 gap-2">
+          <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={depositMin} onChange={(e) => setDepositMin(e.target.value)} placeholder="Dépôt mini" />
+          <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={bonus} onChange={(e) => setBonus(e.target.value)} placeholder="Bonus" />
+          <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={cashback} onChange={(e) => setCashback(e.target.value)} placeholder="Cashback" />
+          <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={freeSpins} onChange={(e) => setFreeSpins(e.target.value)} placeholder="Free Spins" />
+          <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={ctaLabel} onChange={(e) => setCtaLabel(e.target.value)} placeholder="Récupérer mon Bonus" />
         </div>
         <div className="flex gap-2">
           <button onClick={save} disabled={loading} className="px-3 py-2 rounded bg-white text-black disabled:opacity-50">{loading ? 'Enregistrement...' : 'Enregistrer'}</button>

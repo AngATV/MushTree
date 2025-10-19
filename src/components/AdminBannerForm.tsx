@@ -11,6 +11,11 @@ export function AdminBannerForm() {
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [position, setPosition] = useState(0);
+  const [depositMin, setDepositMin] = useState("");
+  const [bonus, setBonus] = useState("");
+  const [cashback, setCashback] = useState("");
+  const [freeSpins, setFreeSpins] = useState("");
+  const [ctaLabel, setCtaLabel] = useState("Récupérer mon Bonus");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -24,7 +29,7 @@ export function AdminBannerForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position }),
+        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel }),
       });
       if (!res.ok) throw new Error("Erreur API");
       setTitle("");
@@ -34,6 +39,11 @@ export function AdminBannerForm() {
       setCategory("");
       setTags("");
       setPosition(0);
+      setDepositMin("");
+      setBonus("");
+      setCashback("");
+      setFreeSpins("");
+      setCtaLabel("Récupérer mon Bonus");
       // Rafraîchir la page serveur pour recharger la liste
       router.refresh();
     } catch (err: any) {
@@ -75,6 +85,28 @@ export function AdminBannerForm() {
         <div>
           <label className="block text-sm mb-1">Position</label>
           <input type="number" className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={position} onChange={(e) => setPosition(parseInt(e.target.value || '0', 10))} />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div>
+          <label className="block text-sm mb-1">Dépôt mini</label>
+          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={depositMin} onChange={(e) => setDepositMin(e.target.value)} placeholder="ex: 20€" />
+        </div>
+        <div>
+          <label className="block text-sm mb-1">Bonus</label>
+          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={bonus} onChange={(e) => setBonus(e.target.value)} placeholder="ex: 100%" />
+        </div>
+        <div>
+          <label className="block text-sm mb-1">Cashback</label>
+          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={cashback} onChange={(e) => setCashback(e.target.value)} placeholder="ex: 10%" />
+        </div>
+        <div>
+          <label className="block text-sm mb-1">Free Spins</label>
+          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={freeSpins} onChange={(e) => setFreeSpins(e.target.value)} placeholder="ex: 50" />
+        </div>
+        <div>
+          <label className="block text-sm mb-1">Label du bouton</label>
+          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={ctaLabel} onChange={(e) => setCtaLabel(e.target.value)} placeholder="Récupérer mon Bonus" />
         </div>
       </div>
       {error ? <p className="text-red-400 text-sm">{error}</p> : null}

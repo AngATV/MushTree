@@ -19,6 +19,12 @@ export async function ensureSchema() {
   await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS category TEXT;`;
   await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}';`;
   await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS position INT DEFAULT 0;`;
+  // Champs offre
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS deposit_min TEXT;`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS bonus TEXT;`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS cashback TEXT;`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS free_spins TEXT;`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS cta_label TEXT;`;
   await sql`CREATE TABLE IF NOT EXISTS clicks (
     id TEXT PRIMARY KEY,
     banner_id TEXT NOT NULL REFERENCES banners(id) ON DELETE CASCADE,
