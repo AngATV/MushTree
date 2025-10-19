@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground: #EEE8FF; /* texte clair */
-  --bg-base: #0d0a1f;    /* fond violet-navy */
-  --accent: #a78bfa;     /* violet */
+  --foreground: #F5F1FF; /* texte clair */
+  --bg-base: #1a1033;    /* base plus lumineuse */
+  --accent: #b69cff;     /* violet vif */
 }
 
 html,
@@ -28,10 +28,10 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(1100px 500px at 20% -10%, rgba(167,139,250,0.40), transparent 60%), /* violet fort */
-    radial-gradient(1100px 500px at 80% 110%, rgba(244,114,182,0.32), transparent 60%), /* rose vif */
-    radial-gradient(900px 420px at 55% 45%, rgba(34,211,238,0.26), transparent 60%),    /* cyan doux */
-    var(--bg-base);
+    linear-gradient(180deg, #2c1b6d 0%, #1a1033 50%, #24104a 100%),
+    radial-gradient(1200px 540px at 20% -10%, rgba(182,156,255,0.55), transparent 60%),
+    radial-gradient(1200px 540px at 80% 110%, rgba(244,114,182,0.45), transparent 60%),
+    radial-gradient(1000px 460px at 55% 45%, rgba(34,211,238,0.35), transparent 60%);
   z-index: -1;
 }
 
