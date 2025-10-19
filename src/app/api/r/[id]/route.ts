@@ -13,8 +13,9 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     req.headers.get("x-real-ip") || "unknown";
   const userAgent = req.headers.get("user-agent") || "unknown";
+  const country = req.headers.get("x-vercel-ip-country") || req.headers.get("cf-ipcountry") || null;
   const id = crypto.randomUUID();
-  await sql`INSERT INTO clicks (id, banner_id, ip, user_agent) VALUES (${id}, ${banner.id}, ${ip}, ${userAgent})`;
+  await sql`INSERT INTO clicks (id, banner_id, ip, user_agent, country) VALUES (${id}, ${banner.id}, ${ip}, ${userAgent}, ${country})`;
   return Response.redirect(banner.link_url, 302);
 }
 

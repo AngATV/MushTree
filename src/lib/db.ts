@@ -31,7 +31,8 @@ export async function ensureSchema() {
     banner_id TEXT NOT NULL REFERENCES banners(id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT NOW(),
     ip TEXT NOT NULL,
-    user_agent TEXT NOT NULL
+    user_agent TEXT NOT NULL,
+    country TEXT
   );`;
   // Social links
   await sql`CREATE TABLE IF NOT EXISTS social_links (
