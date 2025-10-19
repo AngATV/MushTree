@@ -16,6 +16,47 @@ export function AdminBannerForm() {
   const [cashback, setCashback] = useState("");
   const [freeSpins, setFreeSpins] = useState("");
   const [ctaLabel, setCtaLabel] = useState("Récupérer mon Bonus");
+  const [bannerType, setBannerType] = useState('square');
+  const [uploading, setUploading] = useState(false);
+  const [imgInfo, setImgInfo] = useState<{w:number;h:number;ratio:number}|null>(null);
+  const [ratioOk, setRatioOk] = useState(true);
+
+  function expectedRatio(type: string) {
+    if (type === 'landscape') return 21/9; // ≈2.333
+    if (type === 'portrait') return 3/5;   // 0.6
+    return 1; // square
+  }
+
+  function ratioWithin(r:number, target:number) {
+    const tol = 0.08; // ±8%
+    return Math.abs(r - target) / target <= tol;
+  }
+
+  function analyze(url: string, type: string) {
+    if (!url) { setImgInfo(null); setRatioOk(true); return; }
+    const img = new Image();
+    img.onload = () => {
+      const r = img.width / img.height;
+      setImgInfo({ w: img.width, h: img.height, ratio: parseFloat(r.toFixed(3)) });
+      setRatioOk(ratioWithin(r, expectedRatio(type)));
+    };
+    img.onerror = () => { setImgInfo(null); setRatioOk(true); };
+    img.src = url;
+  }
+
+  async function startUpload(file: File) {
+    setUploading(true);
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', credentials: 'include' });
+      const { url } = await res.json();
+      const up = await fetch(url, { method: 'PUT', body: file, headers: { 'content-type': file.type } });
+      const publicUrl = up.headers.get('location') || url.split('?')[0];
+      setImageUrl(publicUrl);
+      analyze(publicUrl, bannerType);
+    } finally {
+      setUploading(false);
+    }
+  }
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -29,7 +70,7 @@ export function AdminBannerForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel }),
+        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
       });
       if (!res.ok) throw new Error("Erreur API");
       setTitle("");
@@ -44,6 +85,7 @@ export function AdminBannerForm() {
       setCashback("");
       setFreeSpins("");
       setCtaLabel("Récupérer mon Bonus");
+      setBannerType('square');
       // Rafraîchir la page serveur pour recharger la liste
       router.refresh();
     } catch (err: any) {
@@ -61,7 +103,13 @@ export function AdminBannerForm() {
       </div>
       <div>
         <label className="block text-sm mb-1">Image URL</label>
-        <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} required />
+        <div className="flex gap-2">
+          <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={imageUrl} onChange={(e) => { setImageUrl(e.target.value); analyze(e.target.value, bannerType); }} required />
+          <label className="inline-flex items-center px-3 py-2 rounded bg-white text-black cursor-pointer">
+            {uploading ? 'Upload…' : 'Uploader'}
+            <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files && e.target.files[0] && startUpload(e.target.files[0])} />
+          </label>
+        </div>
       </div>
       <div>
         <label className="block text-sm mb-1">Lien d'affiliation</label>
@@ -107,6 +155,24 @@ export function AdminBannerForm() {
         <div>
           <label className="block text-sm mb-1">Label du bouton</label>
           <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={ctaLabel} onChange={(e) => setCtaLabel(e.target.value)} placeholder="Récupérer mon Bonus" />
+        </div>
+        <div>
+          <label className="block text-sm mb-1">Type de bannière</label>
+          <select className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={bannerType} onChange={(e) => { setBannerType(e.target.value); analyze(imageUrl, e.target.value); }}>
+            <option value="square">Carré (grille)</option>
+            <option value="landscape">Paysage (large)</option>
+            <option value="portrait">Portrait (vertical)</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Aide ratios */}
+      <div className={`text-xs mt-1 ${ratioOk ? 'text-white/60' : 'text-red-400'}`}>
+        {imgInfo ? (
+          <>Taille détectée: {imgInfo.w}×{imgInfo.h} (ratio {imgInfo.ratio}). {ratioOk ? 'OK' : 'Ratio conseillé non respecté.'}</>
+        ) : 'Chargez une image pour analyser le ratio.'}
+        <div className="mt-1 text-white/60">
+          Recos: carré 1200×1200; paysage 1920×816 (21:9) ou 1600×900 (16:9); portrait 1200×2000 (3:5) ou 1080×1920 (9:16).
         </div>
       </div>
       {error ? <p className="text-red-400 text-sm">{error}</p> : null}

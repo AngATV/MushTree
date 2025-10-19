@@ -18,10 +18,10 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const { rows: banners } = await sql<{
     id: string; title: string; imageUrl: string; linkUrl: string;
     featured: boolean; category: string | null; tags: string[] | null; position: number; createdAt: string;
-    depositMin: string | null; bonus: string | null; cashback: string | null; freeSpins: string | null; ctaLabel: string | null
+    depositMin: string | null; bonus: string | null; cashback: string | null; freeSpins: string | null; ctaLabel: string | null; bannerType: string | null
   }>`
     SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", featured, category, tags, position,
-           deposit_min AS "depositMin", bonus, cashback, free_spins AS "freeSpins", cta_label AS "ctaLabel",
+           deposit_min AS "depositMin", bonus, cashback, free_spins AS "freeSpins", cta_label AS "ctaLabel", banner_type AS "bannerType",
            created_at AS "createdAt"
     FROM banners
     WHERE (${category}::text IS NULL OR category = ${category})
@@ -65,7 +65,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           {/* Menu flottant à gauche (sidebar est déjà dans layout); ici on le masque pour garder la structure du hero */}
           <div className="hidden lg:block" />
           <div>
-            <BannerCard variant="wide" href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority badge="Offre mise en avant" />
+            <BannerCard variant={featured[0].bannerType === 'portrait' ? 'square' : 'wide'} href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority badge="Offre mise en avant" />
           </div>
         </div>
       ) : null}
@@ -73,7 +73,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       {others.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {others.map((b) => (
-            <BannerCard key={b.id} variant="square" href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title}
+            <BannerCard key={b.id} variant={b.bannerType === 'landscape' ? 'wide' : b.bannerType === 'portrait' ? 'square' : 'square'} href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title}
               depositMin={b.depositMin} bonus={b.bonus} cashback={b.cashback} freeSpins={b.freeSpins} ctaLabel={b.ctaLabel} />
           ))}
         </div>
