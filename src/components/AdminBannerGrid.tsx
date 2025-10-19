@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminBannerItem } from "@/components/AdminBannerItem";
+import { Modal } from "@/components/Modal";
 
 type Banner = {
   id: string;
@@ -17,6 +18,7 @@ type Banner = {
 
 export function AdminBannerGrid({ initial }: { initial: Banner[] }) {
   const [items, setItems] = useState<Banner[]>(initial);
+  const [openId, setOpenId] = useState<string|null>(null);
   const router = useRouter();
 
   useEffect(() => { setItems(initial); }, [initial]);
@@ -55,14 +57,33 @@ export function AdminBannerGrid({ initial }: { initial: Banner[] }) {
       <div className="text-sm text-white/60">Glissez-déposez pour réordonner. Cliquez “Enregistrer l’ordre”.</div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {items.map(b => (
-          <div key={b.id} draggable onDragStart={(e) => onDragStart(e, b.id)} onDragOver={onDragOver} onDrop={(e) => onDrop(e, b.id)} className="rounded-xl border border-white/10 p-1">
-            <AdminBannerItem banner={b} />
+          <div key={b.id} draggable onDragStart={(e) => onDragStart(e, b.id)} onDragOver={onDragOver} onDrop={(e) => onDrop(e, b.id)} className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-3">
+            <div className="flex items-start gap-3">
+              <div className="w-40 aspect-[16/9] overflow-hidden rounded bg-black/30">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={b.imageUrl} alt={b.title} className="w-full h-full object-contain" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="font-semibold truncate">{b.title}</div>
+                <div className="text-xs text-white/60 truncate">{b.linkUrl}</div>
+                <div className="mt-2 flex gap-2">
+                  <button onClick={() => setOpenId(b.id)} className="px-3 py-1.5 rounded bg-white text-black text-sm">Éditer</button>
+                </div>
+              </div>
+            </div>
           </div>
         ))}
       </div>
       <div>
         <button onClick={persist} className="px-4 py-2 rounded bg-white text-black font-semibold">Enregistrer l’ordre</button>
       </div>
+
+      {/* Drawer/modal d'édition */}
+      <Modal open={!!openId} onClose={() => setOpenId(null)} title="Éditer la bannière">
+        {openId && (
+          <AdminBannerItem banner={items.find(i => i.id === openId)!} />
+        )}
+      </Modal>
     </div>
   );
 }
