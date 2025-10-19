@@ -22,6 +22,8 @@ export default function ClientSidebar() {
     </a>
   );
 
+  const hasAny = !!(map.youtube || map.x || map.instagram || map.telegram);
+
   return (
     <aside className="hidden lg:block h-fit sticky top-16 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
       <div className="text-sm font-semibold mb-3 text-white/80">Menu</div>
@@ -29,13 +31,17 @@ export default function ClientSidebar() {
         <Item href="/" label="Offres casino" />
         <Item label="Mini-jeux" pending />
       </div>
-      <div className="mt-4 text-sm font-semibold mb-2 text-white/80">Réseaux</div>
-      <div className="grid gap-2 text-sm">
-        <Item href={map.youtube} label="Youtube" />
-        <Item href={map.x} label="X" />
-        <Item href={map.instagram} label="Instagram" />
-        <Item href={map.telegram} label="Telegram" />
-      </div>
+      {hasAny ? (
+        <>
+          <div className="mt-4 text-sm font-semibold mb-2 text-white/80">Réseaux</div>
+          <div className="grid gap-2 text-sm">
+            {map.youtube ? <Item href={map.youtube} label="Youtube" /> : null}
+            {map.x ? <Item href={map.x} label="X" /> : null}
+            {map.instagram ? <Item href={map.instagram} label="Instagram" /> : null}
+            {map.telegram ? <Item href={map.telegram} label="Telegram" /> : null}
+          </div>
+        </>
+      ) : null}
     </aside>
   );
 }

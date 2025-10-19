@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdminSidebar from "@/components/AdminSidebar";
 
 export const metadata: Metadata = {
   title: "Admin – mushway.bet",
@@ -6,13 +7,11 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="py-6 lg:col-span-2">
-      <div className="mb-6 flex items-center gap-3 text-sm">
-        <a href="/admin/dashboard" className="px-3 py-1.5 rounded border border-white/20 hover:border-white/40">Bannières</a>
-        <a href="/admin/social" className="px-3 py-1.5 rounded border border-white/20 hover:border-white/40">Réseaux</a>
-        <a href="/admin/trackings" className="px-3 py-1.5 rounded border border-white/20 hover:border-white/40">Trackings</a>
+    <div className="container py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
+        <AdminSidebar />
+        <div>{children}</div>
       </div>
-      {children}
     </div>
   );
 }
