@@ -24,13 +24,13 @@ export async function GET(req: Request) {
 
   const rows = (await sql<any>`
     SELECT date_trunc(${dateTrunc}::text, created_at) AS bucket,
-           ${bannerId ? sql`banner_id` : sql`NULL::text AS banner_id`},
+           banner_id,
            COUNT(*)::int AS clicks
     FROM clicks
     WHERE (${bannerId}::text IS NULL OR banner_id = ${bannerId})
       AND (${from ? from.toISOString() : null}::timestamptz IS NULL OR created_at >= ${from ? from.toISOString() : null})
       AND (${to ? to.toISOString() : null}::timestamptz IS NULL OR created_at < ${to ? to.toISOString() : null})
-    GROUP BY 1, ${bannerId ? sql`2` : sql`1`}
+    GROUP BY 1, 2
     ORDER BY bucket ASC
   `).rows;
 
