@@ -35,11 +35,11 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
   async function startUpload(file: File) {
     setUploading(true);
     try {
-      const res = await fetch('/api/upload', { method: 'POST', credentials: 'include' });
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/upload', { method: 'POST', body: fd, credentials: 'include' });
       const { url } = await res.json();
-      const up = await fetch(url, { method: 'PUT', body: file, headers: { 'content-type': file.type } });
-      const publicUrl = up.headers.get('location') || url.split('?')[0];
-      setImageUrl(publicUrl);
+      setImageUrl(url);
     } finally {
       setUploading(false);
     }
