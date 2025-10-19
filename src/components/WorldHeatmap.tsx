@@ -19,7 +19,8 @@ export default function WorldHeatmap({ countries }: { countries: Country[] }) {
     return { m, max };
   }, [countries]);
 
-  function colorFor(code: string) {
+  function colorFor(code: string | undefined | null) {
+    if (!code || typeof code !== 'string') return 'rgba(16,185,129,0.06)';
     const v = map.m.get(code.toUpperCase()) || 0;
     const t = v / map.max; // 0..1
     const alpha = 0.2 + 0.6 * t; // 0.2..0.8
@@ -31,7 +32,7 @@ export default function WorldHeatmap({ countries }: { countries: Country[] }) {
       <ComposableMap projectionConfig={{ scale: 140 }} style={{ width: "100%", height: "auto" }}>
         <Geographies geography={geoUrl}>
           {({ geographies }: { geographies: any[] }) => geographies.map((geo: any) => {
-            const isoA2 = (geo.properties as any).iso_a2 as string;
+            const isoA2 = ((geo.properties as any).iso_a2 as string) || 'XX';
             return (
               <Geography
                 key={geo.rsmKey}
