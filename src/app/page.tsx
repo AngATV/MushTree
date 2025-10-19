@@ -54,7 +54,19 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
           {/* Menu flottant à gauche (sidebar est déjà dans layout); ici on le masque pour garder la structure du hero */}
           <div className="hidden lg:block" />
           <div>
-            <BannerCard variant={featured[0].bannerType === 'portrait' ? 'square' : 'wide'} href={`/api/r/${featured[0].id}`} src={featured[0].imageUrl} alt={featured[0].title} priority badge="Offre mise en avant" />
+            <BannerCard
+              variant={featured[0].bannerType === 'portrait' ? 'square' : 'wide'}
+              href={`/api/r/${featured[0].id}`}
+              src={featured[0].imageUrl}
+              alt={featured[0].title}
+              priority
+              badge="Offre mise en avant"
+              depositMin={featured[0].depositMin}
+              bonus={featured[0].bonus}
+              cashback={featured[0].cashback}
+              freeSpins={featured[0].freeSpins}
+              ctaLabel={featured[0].ctaLabel}
+            />
           </div>
         </div>
       ) : null}

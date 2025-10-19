@@ -14,6 +14,12 @@ type Props = {
 };
 
 export function BannerCard({ href, src, alt, priority, badge, variant = "wide", disabled = false, depositMin, bonus, cashback, freeSpins, ctaLabel }: Props) {
+  const hasDeposit = !!(depositMin && depositMin.trim());
+  const hasBonus = !!(bonus && bonus.trim());
+  const hasCashback = !!(cashback && cashback.trim());
+  const hasSpins = !!(freeSpins && freeSpins.trim());
+  const hasAnyInfo = hasDeposit || hasBonus || hasCashback || hasSpins;
+
   return (
     <a href={disabled ? undefined : href} target={disabled ? undefined : "_blank"} rel={disabled ? undefined : "nofollow noopener noreferrer"} className={`block group ${disabled ? "pointer-events-none" : ""}`}>
       <div className={`w-full ${variant === "square" ? "aspect-square" : "h-[20vh] md:h-[24vh] lg:h-[28vh]"} flex items-center justify-center rounded-xl overflow-hidden relative`}>
@@ -28,16 +34,26 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
         }} />
         <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} className={`w-full h-full ${variant === "square" ? "object-cover" : "object-contain"}`} />
       </div>
-      {/* Strip infos + CTA */}
-      {variant === 'square' && (
-        <div className="mt-2 grid grid-cols-2 sm:grid-cols-2 gap-3 text-sm text-white/80">
-          <div className="rounded-lg border border-white/10 px-3 py-2">Dépôt: <span className="text-white">{depositMin ?? '—'}</span></div>
-          <div className="rounded-lg border border-white/10 px-3 py-2">Bonus: <span className="text-white">{bonus ?? '—'}</span></div>
-          <div className="rounded-lg border border-white/10 px-3 py-2">Cashback: <span className="text-white">{cashback ?? '—'}</span></div>
-          <div className="rounded-lg border border-white/10 px-3 py-2">Free Spins: <span className="text-white">{freeSpins ?? '—'}</span></div>
-          <a className="col-span-2 mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-400 text-black font-semibold px-4 py-2.5" href={href}>
-            {ctaLabel ?? 'Récupérer mon Bonus'}
-          </a>
+      {/* Strip infos + CTA (affichée si au moins une info ou CTA) */}
+      {(hasAnyInfo || (ctaLabel && ctaLabel.trim())) && (
+        <div className={`mt-2 grid ${variant === 'square' ? 'grid-cols-2' : 'grid-cols-2'} sm:grid-cols-2 gap-3 text-sm text-white/80`}>
+          {hasDeposit && (
+            <div className="rounded-lg border border-white/10 px-3 py-2">Dépôt: <span className="text-white">{depositMin}</span></div>
+          )}
+          {hasBonus && (
+            <div className="rounded-lg border border-white/10 px-3 py-2">Bonus: <span className="text-white">{bonus}</span></div>
+          )}
+          {hasCashback && (
+            <div className="rounded-lg border border-white/10 px-3 py-2">Cashback: <span className="text-white">{cashback}</span></div>
+          )}
+          {hasSpins && (
+            <div className="rounded-lg border border-white/10 px-3 py-2">Free Spins: <span className="text-white">{freeSpins}</span></div>
+          )}
+          {(ctaLabel && ctaLabel.trim()) && (
+            <a className="col-span-2 mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-400 text-black font-semibold px-4 py-2.5" href={href}>
+              {ctaLabel}
+            </a>
+          )}
         </div>
       )}
     </a>
