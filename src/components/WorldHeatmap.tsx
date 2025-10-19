@@ -31,18 +31,20 @@ export default function WorldHeatmap({ countries }: { countries: Country[] }) {
     <div className="w-full overflow-hidden">
       <ComposableMap projectionConfig={{ scale: 140 }} style={{ width: "100%", height: "auto" }}>
         <Geographies geography={geoUrl}>
-          {({ geographies }: { geographies: any[] }) => geographies.map((geo: any) => {
-            const isoA2 = ((geo.properties as any).iso_a2 as string) || 'XX';
-            return (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                fill={colorFor(isoA2)}
-                stroke="#0b1216"
-                style={{ default: { outline: "none" }, hover: { outline: "none" }, pressed: { outline: "none" } }}
-              />
-            );
-          })}
+          {({ geographies }: { geographies?: any[] }) => Array.isArray(geographies) ? (
+            geographies.map((geo: any) => {
+              const isoA2 = ((geo.properties as any).iso_a2 as string) || 'XX';
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill={colorFor(isoA2)}
+                  stroke="#0b1216"
+                  style={{ default: { outline: "none" }, hover: { outline: "none" }, pressed: { outline: "none" } }}
+                />
+              );
+            })
+          ) : null}
         </Geographies>
       </ComposableMap>
     </div>
