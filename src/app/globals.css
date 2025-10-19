@@ -37,3 +37,9 @@ body::before {
   @apply max-w-7xl mx-auto px-4;
 }
 
+/* Rendre les selects lisibles en thème sombre (texte clair, fond sombre) */
+select, select option {
+  color: var(--foreground);
+  background-color: #0b1216;
+}
+

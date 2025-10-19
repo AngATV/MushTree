@@ -16,8 +16,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <header className="sticky top-0 z-20 border-b border-white/10 bg-[#07161b]/70 backdrop-blur">
             <div className="container py-3 flex items-center justify-between">
               <div className="text-lg font-semibold bg-gradient-to-r from-emerald-300 via-cyan-300 to-fuchsia-300 bg-clip-text text-transparent">mushway.bet</div>
-              <nav className="hidden sm:flex gap-4 text-sm text-white/80">
-                <a href="/" className="hover:text-white">Offres</a>
+              <nav className="hidden sm:flex items-center gap-3 text-sm text-white/80">
+                <a href="/?lang=fr" aria-label="Français / Canadien" className="hover:text-white text-lg">🇫🇷/🇨🇦</a>
+                <a href="/?lang=en" aria-label="English" className="hover:text-white text-lg">🇬🇧</a>
               </nav>
             </div>
           </header>

@@ -14,7 +14,7 @@ export default function ClientSidebar() {
   (data?.links || []).forEach((l: any) => { map[l.platform] = l.url; });
 
   const Item = ({ href, label, pending }: { href?: string; label: string; pending?: boolean }) => (
-    <a href={href || "#"} target={href ? "_blank" : undefined} className="block px-3 py-2 rounded-lg hover:bg-white/10 border border-white/10">
+    <a href={href || "#"} target={href && href.startsWith('http') ? "_blank" : undefined} rel={href && href.startsWith('http') ? "noopener noreferrer" : undefined} className="block px-3 py-2 rounded-lg hover:bg-white/10 border border-white/10">
       <div className="flex items-center justify-between gap-2">
         <span>{label}</span>
         {pending ? <span className="text-xs text-white/50">à venir</span> : null}
