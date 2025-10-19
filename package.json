@@ -21,7 +21,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "swr": "^2.2.5",
-    "react-svg-worldmap": "^3.0.3"
+    "react-simple-maps": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

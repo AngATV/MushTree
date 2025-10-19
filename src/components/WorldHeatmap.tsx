@@ -2,29 +2,49 @@
 
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 
-const WorldMap = dynamic(() => import("react-svg-worldmap").then(m => m.WorldMap), { ssr: false });
+// TopoJSON minifié (World-110m) importé depuis un CDN à l’exécution (SSG off)
+const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
 type Country = { country: string | null; clicks: number };
 
 export default function WorldHeatmap({ countries }: { countries: Country[] }) {
-  const data = useMemo(() => (countries || [])
-    .filter(c => c.country)
-    .map(c => ({ country: (c.country || "").toUpperCase(), value: c.clicks })), [countries]);
+  const map = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const c of countries || []) {
+      if (!c.country) continue;
+      m.set(c.country.toUpperCase(), (m.get(c.country.toUpperCase()) || 0) + c.clicks);
+    }
+    const max = Math.max(1, ...Array.from(m.values()));
+    return { m, max };
+  }, [countries]);
 
-  if (!data.length) return <div className="text-sm text-white/70">Pas de données pays pour cette période.</div>;
+  function colorFor(code: string) {
+    const v = map.m.get(code.toUpperCase()) || 0;
+    const t = v / map.max; // 0..1
+    const alpha = 0.2 + 0.6 * t; // 0.2..0.8
+    return `rgba(16,185,129,${alpha.toFixed(3)})`;
+  }
 
   return (
     <div className="w-full overflow-hidden">
-      <WorldMap
-        color="rgba(16,185,129,0.8)"
-        title=""
-        valueSuffix=" clics"
-        size="responsive"
-        data={data as any}
-        tooltipBgColor="#0b1216"
-        backgroundColor="transparent"
-      />
+      <ComposableMap projectionConfig={{ scale: 140 }} style={{ width: "100%", height: "auto" }}>
+        <Geographies geography={geoUrl}>
+          {({ geographies }) => geographies.map(geo => {
+            const isoA2 = (geo.properties as any).iso_a2 as string;
+            return (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                fill={colorFor(isoA2)}
+                stroke="#0b1216"
+                style={{ default: { outline: "none" }, hover: { outline: "none" }, pressed: { outline: "none" } }}
+              />
+            );
+          })}
+        </Geographies>
+      </ComposableMap>
     </div>
   );
 }
