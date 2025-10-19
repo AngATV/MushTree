@@ -25,7 +25,11 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: #0b1216;
+  background:
+    radial-gradient(1000px 400px at 15% -10%, rgba(59,130,246,0.20), transparent 60%),
+    radial-gradient(1000px 400px at 85% 110%, rgba(236,72,153,0.18), transparent 60%),
+    radial-gradient(900px 360px at 50% 50%, rgba(16,185,129,0.16), transparent 60%),
+    #0b1216;
   z-index: -1;
 }
 
