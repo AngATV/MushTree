@@ -30,12 +30,12 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
       </div>
       {/* Strip infos + CTA */}
       {variant === 'square' && (
-        <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-white/80">
-          <div className="rounded-lg border border-white/10 px-2 py-1">Dépôt: <span className="text-white">{depositMin ?? '—'}</span></div>
-          <div className="rounded-lg border border-white/10 px-2 py-1">Bonus: <span className="text-white">{bonus ?? '—'}</span></div>
-          <div className="rounded-lg border border-white/10 px-2 py-1">Cashback: <span className="text-white">{cashback ?? '—'}</span></div>
-          <div className="rounded-lg border border-white/10 px-2 py-1">Free Spins: <span className="text-white">{freeSpins ?? '—'}</span></div>
-          <a className="col-span-2 sm:col-span-4 mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-400 text-black font-semibold px-3 py-2" href={href}>
+        <div className="mt-2 grid grid-cols-2 sm:grid-cols-2 gap-3 text-sm text-white/80">
+          <div className="rounded-lg border border-white/10 px-3 py-2">Dépôt: <span className="text-white">{depositMin ?? '—'}</span></div>
+          <div className="rounded-lg border border-white/10 px-3 py-2">Bonus: <span className="text-white">{bonus ?? '—'}</span></div>
+          <div className="rounded-lg border border-white/10 px-3 py-2">Cashback: <span className="text-white">{cashback ?? '—'}</span></div>
+          <div className="rounded-lg border border-white/10 px-3 py-2">Free Spins: <span className="text-white">{freeSpins ?? '—'}</span></div>
+          <a className="col-span-2 mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-400 text-black font-semibold px-4 py-2.5" href={href}>
             {ctaLabel ?? 'Récupérer mon Bonus'}
           </a>
         </div>

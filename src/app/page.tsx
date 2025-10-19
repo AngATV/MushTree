@@ -71,7 +71,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       ) : null}
 
       {others.length ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {others.map((b) => (
             <BannerCard key={b.id} variant="square" href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title}
               depositMin={b.depositMin} bonus={b.bonus} cashback={b.cashback} freeSpins={b.freeSpins} ctaLabel={b.ctaLabel} />
