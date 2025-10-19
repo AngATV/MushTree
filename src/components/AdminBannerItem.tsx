@@ -21,7 +21,7 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
   const [imageUrl, setImageUrl] = useState(banner.imageUrl);
   const [linkUrl, setLinkUrl] = useState(banner.linkUrl);
   const [featured, setFeatured] = useState<boolean>(!!banner.featured);
-  const [category, setCategory] = useState<string>(banner.category ?? "");
+  const [category, setCategory] = useState<string>("");
   const [tags, setTags] = useState<string>((banner.tags ?? []).join(", "));
   const [position, setPosition] = useState<number>(banner.position ?? 0);
   const [depositMin, setDepositMin] = useState<string>((banner as any).depositMin ?? "");
@@ -52,7 +52,7 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
+      body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
     });
     setLoading(false);
     router.refresh();
@@ -76,7 +76,7 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
       <div className="space-y-2">
         <div className="grid md:grid-cols-2 gap-2">
           <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={title} onChange={(e) => setTitle(e.target.value)} />
-          <input className="px-3 py-2 rounded bg-white/10 border border-white/20" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Catégorie" />
+          {/* catégorie retirée */}
         </div>
         <div className="flex gap-2">
           <input className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />

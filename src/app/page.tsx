@@ -9,10 +9,8 @@ type SearchParams = { [key: string]: string | string[] | undefined };
 
 export default async function Home({ searchParams }: { searchParams?: SearchParams }) {
   await ensureSchema();
-  const category = typeof searchParams?.category === "string" ? searchParams!.category : null;
   const tag = typeof searchParams?.tag === "string" ? searchParams!.tag : null;
 
-  const { rows: categoryRows } = await sql<{ category: string }>`SELECT DISTINCT category FROM banners WHERE category IS NOT NULL ORDER BY category ASC`;
   const { rows: tagRows } = await sql<{ tag: string }>`SELECT DISTINCT unnest(tags) AS tag FROM banners WHERE tags IS NOT NULL AND array_length(tags,1) > 0 ORDER BY tag ASC`;
 
   const { rows: banners } = await sql<{
@@ -24,13 +22,11 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
            deposit_min AS "depositMin", bonus, cashback, free_spins AS "freeSpins", cta_label AS "ctaLabel", banner_type AS "bannerType",
            created_at AS "createdAt"
     FROM banners
-    WHERE (${category}::text IS NULL OR category = ${category})
-      AND (${tag}::text IS NULL OR ${tag} = ANY(tags))
+    WHERE (${tag}::text IS NULL OR ${tag} = ANY(tags))
     ORDER BY featured DESC, position ASC, created_at DESC
   `;
   const featured = banners.filter(b => b.featured);
   const others = banners.filter(b => !b.featured);
-  const categories = categoryRows.map(r => r.category);
   const tags = tagRows.map(r => r.tag);
   const isActive = (k: string, v: string) => (searchParams?.[k] === v);
 
@@ -42,19 +38,12 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
       </header>
 
       <div className="sticky top-16 z-10 rounded-xl border border-white/10 bg-[#07161b]/70 backdrop-blur px-3 py-3 space-y-2">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="text-sm text-white/60 mr-1">Catégories:</span>
-          <a href="/" className={`px-3 py-1.5 rounded-full text-sm border ${!category ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>Toutes</a>
-          {categories.map((c) => (
-            <a key={c} href={`/?category=${encodeURIComponent(c)}${tag ? `&tag=${encodeURIComponent(tag)}` : ''}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('category', c) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{c}</a>
-          ))}
-        </div>
         {tags.length ? (
           <div className="flex gap-2 items-center overflow-x-auto no-scrollbar py-1">
             <span className="text-sm text-white/60 mr-1">Tags:</span>
-            <a href={`/${category ? `?category=${encodeURIComponent(category)}` : ''}`} className={`px-3 py-1.5 rounded-full text-sm border ${!tag ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>Tous</a>
+            <a href={`/`} className={`px-3 py-1.5 rounded-full text-sm border ${!tag ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>Tous</a>
             {tags.map((t) => (
-              <a key={t} href={`/?${category ? `category=${encodeURIComponent(category)}&` : ''}tag=${encodeURIComponent(t)}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('tag', t) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{t}</a>
+              <a key={t} href={`/?tag=${encodeURIComponent(t)}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('tag', t) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{t}</a>
             ))}
           </div>
         ) : null}

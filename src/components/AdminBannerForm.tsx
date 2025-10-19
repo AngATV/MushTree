@@ -8,7 +8,6 @@ export function AdminBannerForm() {
   const [imageUrl, setImageUrl] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
   const [featured, setFeatured] = useState(false);
-  const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [position, setPosition] = useState(0);
   const [depositMin, setDepositMin] = useState("");
@@ -70,14 +69,13 @@ export function AdminBannerForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: category || null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
+        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
       });
       if (!res.ok) throw new Error("Erreur API");
       setTitle("");
       setImageUrl("");
       setLinkUrl("");
       setFeatured(false);
-      setCategory("");
       setTags("");
       setPosition(0);
       setDepositMin("");
