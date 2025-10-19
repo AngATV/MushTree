@@ -22,7 +22,8 @@ export default function TrackingsPage() {
     (async () => {
       const res = await fetch("/api/banners", { cache: "no-store" });
       const data = await res.json();
-      setBanners(data.banners);
+      const list = Array.isArray(data) ? data : data.banners;
+      setBanners(Array.isArray(list) ? list : []);
     })();
   }, []);
 

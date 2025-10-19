@@ -8,7 +8,7 @@ export const revalidate = 0;
 export async function GET() {
   await ensureSchema();
   const { rows } = await sql`SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", featured, category, tags, position, deposit_min AS "depositMin", bonus, cashback, free_spins AS "freeSpins", cta_label AS "ctaLabel", banner_type AS "bannerType", created_at AS "createdAt" FROM banners ORDER BY featured DESC, position ASC, created_at DESC`;
-  return Response.json(rows);
+  return Response.json({ banners: rows });
 }
 
 export async function POST(req: Request) {
