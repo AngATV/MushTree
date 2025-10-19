@@ -12,9 +12,8 @@ export async function POST(req: Request) {
   const file = form.get("file") as unknown as File | null;
   if (!file) return new Response("Bad Request", { status: 400 });
 
-  const arrayBuffer = await file.arrayBuffer();
   const filename = `banners/${crypto.randomUUID()}-${file.name}`.replace(/\s+/g, "-");
-  const blob = await put(filename, new Uint8Array(arrayBuffer), {
+  const blob = await put(filename, file, {
     access: "public",
     contentType: file.type || "application/octet-stream",
   });
