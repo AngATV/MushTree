@@ -12,8 +12,8 @@ type Banner = { id: string; title: string };
 export default function TrackingsPage() {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [bannerId, setBannerId] = useState<string>("");
-  const [from, setFrom] = useState<string>("");
-  const [to, setTo] = useState<string>("");
+  const [fromDate, setFromDate] = useState<string>(""); // yyyy-MM-dd
+  const [toDate, setToDate] = useState<string>("");     // yyyy-MM-dd
   const [grain, setGrain] = useState<"day" | "week" | "month">("day");
   const [agg, setAgg] = useState<Agg[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
@@ -30,8 +30,10 @@ export default function TrackingsPage() {
   useEffect(() => {
     const params = new URLSearchParams();
     if (bannerId) params.set("bannerId", bannerId);
-    if (from) params.set("from", from);
-    if (to) params.set("to", to);
+    const fromIso = fromDate ? new Date(fromDate).toISOString() : "";
+    const toIso = toDate ? new Date(toDate).toISOString() : "";
+    if (fromIso) params.set("from", fromIso);
+    if (toIso) params.set("to", toIso);
     params.set("grain", grain);
     (async () => {
       const [a, c] = await Promise.all([
@@ -41,7 +43,7 @@ export default function TrackingsPage() {
       setAgg(a.rows || []);
       setCountries(c.rows || []);
     })();
-  }, [bannerId, from, to, grain]);
+  }, [bannerId, fromDate, toDate, grain]);
 
   const series = useMemo(() => agg.map(r => ({ x: new Date(r.bucket).toLocaleDateString("fr-FR"), y: r.clicks })), [agg]);
 
@@ -59,11 +61,11 @@ export default function TrackingsPage() {
         </div>
         <div>
           <label className="block text-sm mb-1">Du</label>
-          <input type="date" className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={from} onChange={(e) => setFrom(e.target.value ? new Date(e.target.value).toISOString() : "")} />
+          <input type="date" className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
         </div>
         <div>
           <label className="block text-sm mb-1">Au</label>
-          <input type="date" className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={to} onChange={(e) => setTo(e.target.value ? new Date(e.target.value).toISOString() : "")} />
+          <input type="date" className="w-full px-3 py-2 rounded bg-white/10 border border-white/20" value={toDate} onChange={(e) => setToDate(e.target.value)} />
         </div>
         <div>
           <label className="block text-sm mb-1">Granularité</label>
