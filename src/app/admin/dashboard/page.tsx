@@ -20,7 +20,8 @@ export default async function DashboardPage() {
     SELECT banner_id AS "bannerId", COUNT(*)::int AS "count" FROM clicks GROUP BY banner_id`;
   const countById = Object.fromEntries(stats.map(s => [s.bannerId, s.count]));
   const featured = banners.filter(b => b.featured);
-  const others = banners.filter(b => !b.featured);
+  const top = featured[0] ?? banners[0];
+  const others = banners.filter(b => !top || b.id !== top.id);
   const { rows: totalClicksRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM clicks`;
   const { rows: todayClicksRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM clicks WHERE created_at::date = CURRENT_DATE`;
   const { rows: totalBannersRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM banners`;
@@ -56,9 +57,9 @@ export default async function DashboardPage() {
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Aperçu client</h2>
-        {banners.length ? (
+        {top ? (
           <div className="grid grid-cols-1 gap-6">
-            <BannerCard variant="wide" href="#" src={(featured[0] ?? banners[0]).imageUrl} alt={(featured[0] ?? banners[0]).title} disabled />
+            <BannerCard variant="wide" href="#" src={top.imageUrl} alt={top.title} disabled />
           </div>
         ) : (
           <p className="text-white/60">Aucune bannière à prévisualiser.</p>
