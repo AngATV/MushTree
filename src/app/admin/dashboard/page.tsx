@@ -2,6 +2,7 @@ import { sql } from "@vercel/postgres";
 import { getAuthUserFromCookies } from "@/lib/auth";
 import { AdminBannerForm } from "@/components/AdminBannerForm";
 import { AdminBannerItem } from "@/components/AdminBannerItem";
+import { AdminBannerGrid } from "@/components/AdminBannerGrid";
 import { BannerCard } from "@/components/BannerCard";
 
 export default async function DashboardPage() {
@@ -20,9 +21,31 @@ export default async function DashboardPage() {
   const countById = Object.fromEntries(stats.map(s => [s.bannerId, s.count]));
   const featured = banners.filter(b => b.featured);
   const others = banners.filter(b => !b.featured);
+  const { rows: totalClicksRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM clicks`;
+  const { rows: todayClicksRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM clicks WHERE created_at::date = CURRENT_DATE`;
+  const { rows: totalBannersRows } = await sql<{ count: number }>`SELECT COUNT(*)::int AS count FROM banners`;
+  const totalClicks = totalClicksRows[0]?.count ?? 0;
+  const todayClicks = todayClicksRows[0]?.count ?? 0;
+  const totalBanners = totalBannersRows[0]?.count ?? 0;
 
   return (
     <div className="container py-10 space-y-8">
+      {/* Topbar stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <div className="text-xs text-white/60">Bannières</div>
+          <div className="text-2xl font-semibold">{totalBanners}</div>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <div className="text-xs text-white/60">Clics (au total)</div>
+          <div className="text-2xl font-semibold">{totalClicks}</div>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <div className="text-xs text-white/60">Clics (aujourd'hui)</div>
+          <div className="text-2xl font-semibold">{todayClicks}</div>
+        </div>
+      </div>
+
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-3">Administration</h1>
         <h2 className="text-xl font-semibold mb-3">Ajouter une bannière</h2>
@@ -52,14 +75,7 @@ export default async function DashboardPage() {
 
       <div>
         <h2 className="text-xl font-semibold mb-3">Bannières</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {banners.map(b => (
-            <div key={b.id} className="space-y-1">
-              <AdminBannerItem banner={b} />
-              <div className="text-xs text-white/50">{countById[b.id] ?? 0} clics</div>
-            </div>
-          ))}
-        </div>
+        <AdminBannerGrid initial={banners} />
       </div>
     </div>
   );
