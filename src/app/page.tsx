@@ -35,9 +35,9 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
 
   return (
     <section className="container py-10 space-y-6">
-      <header className="space-y-2">
+      <header className="space-y-2 text-center">
         <h1 className="text-3xl font-bold tracking-tight">{dict.heroTitle}</h1>
-        <p className="text-white/60">{dict.heroSubtitle}</p>
+        <p className="text-white/70">{dict.heroSubtitle}</p>
       </header>
 
       {/* Tags retirés */}

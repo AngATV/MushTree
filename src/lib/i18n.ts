@@ -16,8 +16,8 @@ export type Dict = {
 };
 
 const fr: Dict = {
-  heroTitle: "Offres casino",
-  heroSubtitle: "Sélection d’offres mises à jour. Cliquez pour découvrir les promotions.",
+  heroTitle: "Notre sélection pour vous",
+  heroSubtitle: "Les meilleurs casinos francophones",
   tags: "Tags:",
   banner: {
     deposit: "Dépôt",
