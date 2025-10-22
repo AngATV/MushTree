@@ -10,7 +10,8 @@ type SearchParams = { [key: string]: string | string[] | undefined };
 
 export default async function Home({ searchParams }: { searchParams?: SearchParams }) {
   await ensureSchema();
-  const dict = getDict(typeof searchParams?.lang === 'string' ? searchParams!.lang : null);
+  const langParam = typeof searchParams?.lang === 'string' ? (searchParams!.lang as string) : null;
+  const dict = getDict(langParam);
   const tag = typeof searchParams?.tag === "string" ? searchParams!.tag : null;
 
   const { rows: tagRows } = await sql<{ tag: string }>`SELECT DISTINCT unnest(tags) AS tag FROM banners WHERE tags IS NOT NULL AND array_length(tags,1) > 0 ORDER BY tag ASC`;
@@ -43,9 +44,9 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
         {tags.length ? (
           <div className="flex gap-2 items-center overflow-x-auto no-scrollbar py-1">
             <span className="text-sm text-white/60 mr-1">{dict.tags}</span>
-            <a href={`/`} className={`px-3 py-1.5 rounded-full text-sm border ${!tag ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>Tous</a>
+            <a href={`${langParam ? `/?lang=${encodeURIComponent(langParam)}` : '/'}`} className={`px-3 py-1.5 rounded-full text-sm border ${!tag ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{langParam === 'en' ? 'All' : 'Tous'}</a>
             {tags.map((t) => (
-              <a key={t} href={`/?tag=${encodeURIComponent(t)}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('tag', t) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{t}</a>
+              <a key={t} href={`${langParam ? `/?lang=${encodeURIComponent(langParam)}&` : '/?'}tag=${encodeURIComponent(t)}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('tag', t) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{t}</a>
             ))}
           </div>
         ) : null}

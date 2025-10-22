@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import AppShell from "@/components/AppShell";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Linktree Casino",
@@ -28,26 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <AppShell>{children}</AppShell>
           </div>
 
-          <footer className="border-t border-white/10">
-            <div className="container py-8 text-sm text-white/70 grid gap-6 md:grid-cols-3">
-              <div>
-                <div className="font-semibold mb-2">mushway.bet</div>
-              </div>
-              <div>
-                <div className="font-semibold mb-2">Liens</div>
-                <ul className="space-y-1">
-                  <li><a href="/" className="hover:underline">Offres</a></li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold mb-2">Légal</div>
-                <ul className="space-y-1">
-                  <li><a href="/mentions-legales" className="hover:underline">Mentions légales</a></li>
-                </ul>
-              </div>
-              <div className="md:col-span-3 text-center text-white/50">© 2025</div>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>

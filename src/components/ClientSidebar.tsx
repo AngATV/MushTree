@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import useSWR from "swr";
 
 const fetcher = (u: string) => fetch(u).then(r => r.json());
@@ -9,6 +9,8 @@ export default function ClientSidebar() {
   const pathname = usePathname();
   if (pathname.startsWith("/admin")) return null;
 
+  const sp = useSearchParams();
+  const lang = sp.get("lang");
   const { data } = useSWR("/api/settings/social", fetcher, { revalidateOnFocus: false });
   const map: Record<string, string> = {};
   (data?.links || []).forEach((l: any) => { map[l.platform] = l.url; });
@@ -26,14 +28,14 @@ export default function ClientSidebar() {
 
   return (
     <aside className="hidden lg:block h-fit sticky top-16 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
-      <div className="text-sm font-semibold mb-3 text-white/80">Menu</div>
+      <div className="text-sm font-semibold mb-3 text-white/80">{lang === 'en' ? 'Menu' : 'Menu'}</div>
       <div className="grid gap-2 text-sm">
-        <Item href="/" label="Offres casino" />
-        <Item label="Mini-jeux" pending />
+        <Item href={lang ? `/?lang=${encodeURIComponent(lang)}` : '/'} label={lang === 'en' ? 'Casino offers' : 'Offres casino'} />
+        <Item label={lang === 'en' ? 'Mini games' : 'Mini-jeux'} pending />
       </div>
       {hasAny ? (
         <>
-          <div className="mt-4 text-sm font-semibold mb-2 text-white/80">Réseaux</div>
+          <div className="mt-4 text-sm font-semibold mb-2 text-white/80">{lang === 'en' ? 'Socials' : 'Réseaux'}</div>
           <div className="grid gap-2 text-sm">
             {map.youtube ? <Item href={map.youtube} label="Youtube" /> : null}
             {map.x ? <Item href={map.x} label="X" /> : null}
