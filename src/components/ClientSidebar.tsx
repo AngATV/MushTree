@@ -10,7 +10,8 @@ export default function ClientSidebar() {
   if (pathname.startsWith("/admin")) return null;
 
   const sp = useSearchParams();
-  const lang = sp.get("lang");
+  const lang = sp?.get("lang") ?? (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('lang') : null);
+  const pendingText = lang === 'en' ? 'coming soon' : 'à venir';
   const { data } = useSWR("/api/settings/social", fetcher, { revalidateOnFocus: false });
   const map: Record<string, string> = {};
   (data?.links || []).forEach((l: any) => { map[l.platform] = l.url; });
@@ -19,7 +20,7 @@ export default function ClientSidebar() {
     <a href={href || "#"} target={href && href.startsWith('http') ? "_blank" : undefined} rel={href && href.startsWith('http') ? "noopener noreferrer" : undefined} className="block px-3 py-2 rounded-lg hover:bg-white/10 border border-white/10">
       <div className="flex items-center justify-between gap-2">
         <span>{label}</span>
-        {pending ? <span className="text-xs text-white/50">à venir</span> : null}
+        {pending ? <span className="text-xs text-white/50">{pendingText}</span> : null}
       </div>
     </a>
   );
