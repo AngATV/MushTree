@@ -40,8 +40,8 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
         <p className="text-white/60">{dict.heroSubtitle}</p>
       </header>
 
-      <div className="sticky top-16 z-10 rounded-xl border border-white/10 bg-[#07161b]/70 backdrop-blur px-3 py-3 space-y-2">
-        {tags.length ? (
+      {tags.length ? (
+        <div className="sticky top-16 z-10 rounded-xl border border-white/10 bg-white/10 backdrop-blur px-3 py-3 space-y-2">
           <div className="flex gap-2 items-center overflow-x-auto no-scrollbar py-1">
             <span className="text-sm text-white/60 mr-1">{dict.tags}</span>
             <a href={`${langParam ? `/?lang=${encodeURIComponent(langParam)}` : '/'}`} className={`px-3 py-1.5 rounded-full text-sm border ${!tag ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{langParam === 'en' ? 'All' : 'Tous'}</a>
@@ -49,8 +49,8 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
               <a key={t} href={`${langParam ? `/?lang=${encodeURIComponent(langParam)}&` : '/?'}tag=${encodeURIComponent(t)}`} className={`px-3 py-1.5 rounded-full text-sm border ${isActive('tag', t) ? 'bg-white text-black border-white' : 'border-white/20 hover:border-white/40'}`}>{t}</a>
             ))}
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       {featured.length ? (
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6 items-stretch">
