@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import AppShell from "@/components/AppShell";
 import Footer from "@/components/Footer";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Linktree Casino",
@@ -26,10 +27,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           {/* Body with sidebar */}
           <div className="flex-1">
-            <AppShell>{children}</AppShell>
+            <Suspense fallback={null}>
+              <AppShell>{children}</AppShell>
+            </Suspense>
           </div>
 
-          <Footer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </div>
       </body>
     </html>
