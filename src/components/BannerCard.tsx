@@ -29,7 +29,7 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
           }}>{badge}</span>
         ) : null}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{
-          boxShadow: "inset 0 0 80px rgba(16,185,129,0.18), 0 0 40px rgba(245,211,108,0.25)",
+          boxShadow: "inset 0 0 80px rgba(244,114,182,0.25), 0 0 50px rgba(251,191,36,0.35)",
           pointerEvents: 'none'
         }} />
         <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} className={`w-full h-full ${variant === "square" ? "object-cover" : "object-contain"}`} />
@@ -50,7 +50,7 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
             <div className="rounded-lg border border-white/10 px-3 py-2">Free Spins: <span className="text-white">{freeSpins}</span></div>
           )}
           {(ctaLabel && ctaLabel.trim()) && (
-            <a className="col-span-2 mt-1 inline-flex items-center justify-center rounded-lg bg-emerald-400 text-black font-semibold px-4 py-2.5" href={href}>
+            <a className="col-span-2 mt-1 inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)]" href={href}>
               {ctaLabel}
             </a>
           )}
