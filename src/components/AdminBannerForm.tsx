@@ -16,6 +16,7 @@ export function AdminBannerForm() {
   const [freeSpins, setFreeSpins] = useState("");
   const [ctaLabel, setCtaLabel] = useState("Récupérer mon Bonus");
   const [bannerType, setBannerType] = useState('square');
+  const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [imgInfo, setImgInfo] = useState<{w:number;h:number;ratio:number}|null>(null);
   const [ratioOk, setRatioOk] = useState(true);
@@ -69,7 +70,7 @@ export function AdminBannerForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
+        body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType, description: description || null }),
       });
       if (!res.ok) throw new Error("Erreur API");
       setTitle("");
@@ -84,6 +85,7 @@ export function AdminBannerForm() {
       setFreeSpins("");
       setCtaLabel("Récupérer mon Bonus");
       setBannerType('square');
+      setDescription("");
       // Rafraîchir la page serveur pour recharger la liste
       router.refresh();
     } catch (err: any) {
@@ -158,6 +160,10 @@ export function AdminBannerForm() {
             <option value="portrait">Portrait (vertical)</option>
           </select>
         </div>
+      </div>
+      <div>
+        <label className="block text-sm mb-1">Description</label>
+        <textarea className="w-full px-3 py-2 rounded bg-white/10 border border-white/20 min-h-[100px]" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Courte présentation du casino (markdown simple autorisé)" />
       </div>
 
       {/* Aide ratios */}

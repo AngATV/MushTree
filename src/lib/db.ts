@@ -26,6 +26,7 @@ export async function ensureSchema() {
   await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS free_spins TEXT;`;
   await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS cta_label TEXT;`;
   await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS banner_type TEXT DEFAULT 'square';`;
+  await sql`ALTER TABLE banners ADD COLUMN IF NOT EXISTS description TEXT;`;
   await sql`CREATE TABLE IF NOT EXISTS clicks (
     id TEXT PRIMARY KEY,
     banner_id TEXT NOT NULL REFERENCES banners(id) ON DELETE CASCADE,

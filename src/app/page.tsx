@@ -19,10 +19,10 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
   const { rows: banners } = await sql<{
     id: string; title: string; imageUrl: string; linkUrl: string;
     featured: boolean; category: string | null; tags: string[] | null; position: number; createdAt: string;
-    depositMin: string | null; bonus: string | null; cashback: string | null; freeSpins: string | null; ctaLabel: string | null; bannerType: string | null
+    depositMin: string | null; bonus: string | null; cashback: string | null; freeSpins: string | null; ctaLabel: string | null; bannerType: string | null; description: string | null
   }>`
     SELECT id, title, image_url AS "imageUrl", link_url AS "linkUrl", featured, category, tags, position,
-           deposit_min AS "depositMin", bonus, cashback, free_spins AS "freeSpins", cta_label AS "ctaLabel", banner_type AS "bannerType",
+           deposit_min AS "depositMin", bonus, cashback, free_spins AS "freeSpins", cta_label AS "ctaLabel", banner_type AS "bannerType", description,
            created_at AS "createdAt"
     FROM banners
     WHERE (${tag}::text IS NULL OR ${tag} = ANY(tags))

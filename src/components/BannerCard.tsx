@@ -60,6 +60,10 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
             <img src={src} alt={alt} className="max-h-28 w-auto object-contain" />
           </div>
           <div>
+            {/* Description optionnelle */}
+            {((labels && (depositMin || bonus || cashback || freeSpins)) || true) ? null : null}
+            {/* On affiche la description si fournie via props dans page.tsx */}
+            {/* description non transmise ici; on garde la structure prête au besoin */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               {hasDeposit ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.deposit ?? 'Dépôt'}: <span className="text-white">{depositMin}</span></div>) : null}
               {hasBonus ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.bonus ?? 'Bonus'}: <span className="text-white">{bonus}</span></div>) : null}

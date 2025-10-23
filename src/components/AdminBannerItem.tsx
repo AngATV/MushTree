@@ -30,6 +30,7 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
   const [freeSpins, setFreeSpins] = useState<string>((banner as any).freeSpins ?? "");
   const [ctaLabel, setCtaLabel] = useState<string>((banner as any).ctaLabel ?? "Récupérer mon Bonus");
   const [bannerType, setBannerType] = useState<string>((banner as any).bannerType ?? 'square');
+  const [description, setDescription] = useState<string>((banner as any).description ?? "");
   const [uploading, setUploading] = useState(false);
 
   async function startUpload(file: File) {
@@ -52,7 +53,7 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType }),
+      body: JSON.stringify({ title, imageUrl, linkUrl, featured, category: null, tags: tags ? tags.split(",").map(t => t.trim()).filter(Boolean) : [], position, depositMin: depositMin || null, bonus: bonus || null, cashback: cashback || null, freeSpins: freeSpins || null, ctaLabel, bannerType, description: description || null }),
     });
     setLoading(false);
     router.refresh();
@@ -105,6 +106,9 @@ export function AdminBannerItem({ banner }: { banner: Banner }) {
             <option value="landscape">Paysage (large)</option>
             <option value="portrait">Portrait (vertical)</option>
           </select>
+        </div>
+        <div>
+          <textarea className="w-full px-3 py-2 rounded bg-white/10 border border-white/20 min-h-[90px]" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description du casino" />
         </div>
         <div className="flex gap-2">
           <button onClick={save} disabled={loading} className="px-3 py-2 rounded bg-white text-black disabled:opacity-50">{loading ? 'Enregistrement...' : 'Enregistrer'}</button>
