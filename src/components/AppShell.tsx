@@ -21,9 +21,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <ClientSidebar />
       </div>
       <div>
-        <div className="container py-10">
-          <main>{children}</main>
-        </div>
+        <main className="py-10 px-6">{children}</main>
       </div>
     </div>
   );
