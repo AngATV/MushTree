@@ -28,8 +28,13 @@ export default function ClientSidebar() {
   const hasAny = !!(map.youtube || map.x || map.instagram || map.telegram);
 
   return (
-    <aside className="hidden lg:block h-screen sticky top-0 border-r border-white/10 bg-transparent">
-      <div className="px-6 py-8 space-y-8">
+    <aside className="hidden lg:block h-screen sticky top-0 border-r border-white/10 bg-white/5 backdrop-blur-md relative overflow-hidden">
+      {/* gradient vertical subtil */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ background: `linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 20%, rgba(255,255,255,0.02) 100%)` }} />
+      {/* texture subtile */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: `repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 12px)` }} />
+      <div className="px-6 py-8 h-full flex flex-col">
+        <div className="space-y-8">
         <div>
           <div className="text-[11px] uppercase tracking-wider text-white/50 mb-2">{lang === 'en' ? 'Navigation' : 'Navigation'}</div>
           <nav className="grid text-sm">
@@ -72,9 +77,11 @@ export default function ClientSidebar() {
           </div>
         ) : null}
 
-        {hasAny ? <div className="h-px bg-white/10" /> : null}
+          {hasAny ? <div className="h-px bg-white/10" /> : null}
+        </div>
 
-        <div>
+        {/* Langues sticky bas */}
+        <div className="mt-auto pt-6">
           <div className="text-[11px] uppercase tracking-wider text-white/50 mb-2">{lang === 'en' ? 'Languages' : 'Langues'}</div>
           <div className="flex gap-2">
             <a href="/?lang=fr" className={`px-3 py-1.5 rounded-full border ${lang !== 'en' ? 'bg-white text-black border-white' : 'border-white/20 text-white/85 hover:border-white/40'}`}>FR/CA</a>
