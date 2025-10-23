@@ -16,9 +16,10 @@ type Props = {
   freeSpins?: string | null;
   ctaLabel?: string | null;
   labels?: { deposit: string; bonus: string; cashback: string; freeSpins: string; cta: string };
+  description?: string | null;
 };
 
-export function BannerCard({ href, src, alt, priority, badge, variant = "wide", disabled = false, depositMin, bonus, cashback, freeSpins, ctaLabel, labels }: Props) {
+export function BannerCard({ href, src, alt, priority, badge, variant = "wide", disabled = false, depositMin, bonus, cashback, freeSpins, ctaLabel, labels, description }: Props) {
   const hasDeposit = !!(depositMin && depositMin.trim());
   const hasBonus = !!(bonus && bonus.trim());
   const hasCashback = !!(cashback && cashback.trim());
@@ -48,7 +49,7 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
       </div>
       {/* CTA sous la carte */}
       {(ctaLabel && ctaLabel.trim()) && (
-        <a className="mt-2 inline-flex w-auto max-w-max self-start items-center justify-center rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out group-hover:scale-[1.03] hover:scale-[1.05]" href={href} target="_blank" rel="nofollow noopener noreferrer">
+        <a className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out group-hover:scale-[1.01] hover:scale-[1.02]" href={href} target="_blank" rel="nofollow noopener noreferrer">
           {ctaLabel || labels?.cta || 'Récupérer mon Bonus'}
         </a>
       )}
@@ -60,10 +61,9 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
             <img src={src} alt={alt} className="max-h-28 w-auto object-contain" />
           </div>
           <div>
-            {/* Description optionnelle */}
-            {((labels && (depositMin || bonus || cashback || freeSpins)) || true) ? null : null}
-            {/* On affiche la description si fournie via props dans page.tsx */}
-            {/* description non transmise ici; on garde la structure prête au besoin */}
+            {description ? (
+              <div className="text-sm whitespace-pre-line text-white/80 mb-3">{description}</div>
+            ) : null}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               {hasDeposit ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.deposit ?? 'Dépôt'}: <span className="text-white">{depositMin}</span></div>) : null}
               {hasBonus ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.bonus ?? 'Bonus'}: <span className="text-white">{bonus}</span></div>) : null}

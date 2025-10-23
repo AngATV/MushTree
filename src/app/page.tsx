@@ -58,6 +58,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
               freeSpins={featured[0].freeSpins}
               ctaLabel={featured[0].ctaLabel}
               labels={dict.banner}
+              description={featured[0].description}
             />
           </div>
         </div>
@@ -67,7 +68,7 @@ export default async function Home({ searchParams }: { searchParams?: SearchPara
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {others.map((b) => (
             <BannerCard key={b.id} variant={b.bannerType === 'landscape' ? 'wide' : b.bannerType === 'portrait' ? 'square' : 'square'} href={`/api/r/${b.id}`} src={b.imageUrl} alt={b.title}
-              depositMin={b.depositMin} bonus={b.bonus} cashback={b.cashback} freeSpins={b.freeSpins} ctaLabel={b.ctaLabel} labels={dict.banner} />
+              depositMin={b.depositMin} bonus={b.bonus} cashback={b.cashback} freeSpins={b.freeSpins} ctaLabel={b.ctaLabel} labels={dict.banner} description={b.description} />
           ))}
         </div>
       ) : (!featured.length ? (
