@@ -45,6 +45,47 @@ body::after {
   z-index: -1;
 }
 
+/* Casino sparkles */
+.bg-anim {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+.bg-anim .spark {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #ffd37a, #fb7185 60%, transparent 70%);
+  box-shadow: 0 0 12px rgba(251,113,133,0.6), 0 0 24px rgba(251,191,36,0.35);
+  animation: floaty 12s linear infinite;
+}
+.bg-anim .spark:nth-child(odd) { animation-duration: 16s; }
+.bg-anim .spark:nth-child(3n) { animation-duration: 20s; }
+.bg-anim .spark:nth-child(1) { left: 10%; animation-delay: 0s; }
+.bg-anim .spark:nth-child(2) { left: 25%; animation-delay: 2s; }
+.bg-anim .spark:nth-child(3) { left: 40%; animation-delay: 4s; }
+.bg-anim .spark:nth-child(4) { left: 55%; animation-delay: 1s; }
+.bg-anim .spark:nth-child(5) { left: 70%; animation-delay: 3s; }
+.bg-anim .spark:nth-child(6) { left: 85%; animation-delay: 5s; }
+.bg-anim .spark:nth-child(7) { left: 15%; animation-delay: 6s; }
+.bg-anim .spark:nth-child(8) { left: 35%; animation-delay: 8s; }
+.bg-anim .spark:nth-child(9) { left: 60%; animation-delay: 7s; }
+.bg-anim .spark:nth-child(10){ left: 78%; animation-delay: 9s; }
+.bg-anim .spark:nth-child(11){ left: 5%;  animation-delay: 11s; }
+.bg-anim .spark:nth-child(12){ left: 90%; animation-delay: 13s; }
+
+@keyframes floaty {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  5%   { opacity: 1; }
+  50%  { transform: translateY(60vh) translateX(-20px); }
+  100% { transform: translateY(120vh) translateX(20px); opacity: 0; }
+}
+
 .container {
   @apply max-w-7xl mx-auto px-4;
 }

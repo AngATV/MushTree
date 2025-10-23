@@ -3,6 +3,7 @@ import "./globals.css";
 import AppShell from "@/components/AppShell";
 import Footer from "@/components/Footer";
 import { Suspense } from "react";
+import BgAnimation from "@/components/BgAnimation";
 
 export const metadata: Metadata = {
   title: "Linktree Casino",
@@ -14,6 +15,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="fr">
       <body>
         <div className="min-h-dvh flex flex-col">
+          <BgAnimation />
           {/* Header */}
           <header className="sticky top-0 z-20 bg-gradient-to-r from-amber-200/20 via-rose-200/20 to-fuchsia-200/20 backdrop-blur">
             <div className="container py-3 flex items-center justify-between">
