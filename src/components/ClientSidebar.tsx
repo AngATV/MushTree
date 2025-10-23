@@ -78,7 +78,18 @@ export default function ClientSidebar() {
           </div>
         ) : null}
 
-          {hasAny ? <div className="h-px bg-white/10" /> : null}
+          <div className="h-px bg-white/10" />
+
+          {/* Auth public */}
+          <div>
+            <div className="text-[11px] uppercase tracking-wider text-white/50 mb-2">{lang === 'en' ? 'Account' : 'Compte'}</div>
+            <a href="/api/auth/discord/start" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[#5865F2] text-white/90 hover:text-white">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M20 4.5c-1.6-.7-3.4-1.2-5.2-1.3-.2.4-.4.9-.6 1.3-1.7-.2-3.4-.2-5.1 0-.2-.4-.4-.9-.6-1.3-1.8.1-3.6.6-5.2 1.3C1.5 8 1 11.4 1.2 14.7c2.2 1.6 4.4 2.5 6.6 2.8.5-.7 1-1.4 1.4-2.2-.8-.3-1.5-.7-2.2-1.2.2-.1.3-.2.5-.3 2.1 1 4.4 1 6.5 0 .2.1.4.2.5.3-.7.5-1.4.9-2.2 1.2.4.8.9 1.5 1.4 2.2 2.3-.3 4.5-1.2 6.7-2.8.3-3.3-.2-6.7-2-10.2z"/>
+              </svg>
+              <span>{lang === 'en' ? 'Sign in with Discord' : 'Se connecter avec Discord'}</span>
+            </a>
+          </div>
         </div>
 
         {/* Langues sticky bas */}

@@ -34,6 +34,11 @@ export default function AdminLoginPage() {
         {error ? <p className="text-red-400 text-sm">{error}</p> : null}
         <button disabled={loading} className="px-4 py-2 rounded bg-white text-black disabled:opacity-50">{loading ? "Connexion..." : "Se connecter"}</button>
       </form>
+      <div className="mt-6">
+        <a href="/api/auth/discord/start" className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#5865F2] text-white font-semibold">
+          <span>Se connecter avec Discord</span>
+        </a>
+      </div>
     </div>
   );
 }
