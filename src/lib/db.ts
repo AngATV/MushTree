@@ -34,6 +34,10 @@ export async function ensureSchema() {
     user_agent TEXT NOT NULL,
     country TEXT
   );`;
+  // Rendre le schéma tolérant aux anciennes colonnes
+  await sql`ALTER TABLE clicks ADD COLUMN IF NOT EXISTS ip TEXT;`;
+  await sql`ALTER TABLE clicks ADD COLUMN IF NOT EXISTS user_agent TEXT;`;
+  await sql`ALTER TABLE clicks ADD COLUMN IF NOT EXISTS country TEXT;`;
   // Social links
   await sql`CREATE TABLE IF NOT EXISTS social_links (
     platform TEXT PRIMARY KEY,

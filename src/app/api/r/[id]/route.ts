@@ -19,7 +19,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     try {
       await sql`INSERT INTO clicks (id, banner_id, ip, user_agent, country) VALUES (${id}, ${banner.id}, ${ip}, ${userAgent}, ${country})`;
     } catch (e) {
-      // Ne bloque pas la redirection si le tracking échoue
+      // Réessaie sans les colonnes optionnelles si schéma ancien
+      try {
+        await sql`INSERT INTO clicks (id, banner_id, created_at, ip, user_agent) VALUES (${id}, ${banner.id}, NOW(), ${ip}, ${userAgent})`;
+      } catch {}
     }
     return Response.redirect(banner.link_url, 302);
   } catch (e) {
