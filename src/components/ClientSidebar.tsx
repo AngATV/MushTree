@@ -28,21 +28,21 @@ export default function ClientSidebar() {
   const hasAny = !!(map.youtube || map.x || map.instagram || map.telegram);
 
   return (
-    <aside className="hidden lg:block h-fit sticky top-16 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
+    <aside className="hidden lg:block h-full pr-4 border-r border-white/10">
       <div className="text-sm font-semibold mb-3 text-white/80">{lang === 'en' ? 'Menu' : 'Menu'}</div>
-      <div className="grid gap-2 text-sm">
-        <Item href={lang ? `/?lang=${encodeURIComponent(lang)}` : '/'} label={lang === 'en' ? 'Casino offers' : 'Offres casino'} />
-        <Item label={lang === 'en' ? 'Mini games' : 'Mini-jeux'} pending />
-      </div>
+      <nav className="grid gap-1 text-sm">
+        <a href={lang ? `/?lang=${encodeURIComponent(lang)}` : '/'} className="px-2 py-1.5 rounded hover:text-white text-white/80">{lang === 'en' ? 'Casino offers' : 'Offres casino'}</a>
+        <span className="px-2 py-1.5 rounded text-white/50">{lang === 'en' ? 'Mini games (coming soon)' : 'Mini-jeux (à venir)'}</span>
+      </nav>
       {hasAny ? (
         <>
-          <div className="mt-4 text-sm font-semibold mb-2 text-white/80">{lang === 'en' ? 'Socials' : 'Réseaux'}</div>
-          <div className="grid gap-2 text-sm">
-            {map.youtube ? <Item href={map.youtube} label="Youtube" /> : null}
-            {map.x ? <Item href={map.x} label="X" /> : null}
-            {map.instagram ? <Item href={map.instagram} label="Instagram" /> : null}
-            {map.telegram ? <Item href={map.telegram} label="Telegram" /> : null}
-          </div>
+          <div className="mt-5 text-sm font-semibold mb-2 text-white/80">{lang === 'en' ? 'Socials' : 'Réseaux'}</div>
+          <nav className="grid gap-1 text-sm">
+            {map.youtube ? <a href={map.youtube} target="_blank" rel="noopener noreferrer" className="px-2 py-1.5 rounded hover:text-white text-white/80">Youtube</a> : null}
+            {map.x ? <a href={map.x} target="_blank" rel="noopener noreferrer" className="px-2 py-1.5 rounded hover:text-white text-white/80">X</a> : null}
+            {map.instagram ? <a href={map.instagram} target="_blank" rel="noopener noreferrer" className="px-2 py-1.5 rounded hover:text-white text-white/80">Instagram</a> : null}
+            {map.telegram ? <a href={map.telegram} target="_blank" rel="noopener noreferrer" className="px-2 py-1.5 rounded hover:text-white text-white/80">Telegram</a> : null}
+          </nav>
         </>
       ) : null}
     </aside>
