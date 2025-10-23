@@ -16,9 +16,15 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="container py-10 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
-      <ClientSidebar />
-      <main>{children}</main>
+    <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
+      <div className="hidden lg:block">
+        <ClientSidebar />
+      </div>
+      <div>
+        <div className="container py-10">
+          <main>{children}</main>
+        </div>
+      </div>
     </div>
   );
 }
