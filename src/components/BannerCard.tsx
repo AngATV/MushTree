@@ -61,28 +61,7 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
           </div>
         ) : null}
       </dialog>
-      {/* Strip infos + CTA (affichée si au moins une info ou CTA) */}
-      {(hasAnyInfo || (ctaLabel && ctaLabel.trim())) && (
-        <div className={`mt-2 grid ${variant === 'square' ? 'grid-cols-2' : 'grid-cols-2'} sm:grid-cols-2 gap-3 text-sm text-white/80`}>
-          {hasDeposit && (
-            <div className="rounded-lg border border-white/10 px-3 py-2">{labels?.deposit ?? 'Dépôt'}: <span className="text-white">{depositMin}</span></div>
-          )}
-          {hasBonus && (
-            <div className="rounded-lg border border-white/10 px-3 py-2">{labels?.bonus ?? 'Bonus'}: <span className="text-white">{bonus}</span></div>
-          )}
-          {hasCashback && (
-            <div className="rounded-lg border border-white/10 px-3 py-2">{labels?.cashback ?? 'Cashback'}: <span className="text-white">{cashback}</span></div>
-          )}
-          {hasSpins && (
-            <div className="rounded-lg border border-white/10 px-3 py-2">{labels?.freeSpins ?? 'Free Spins'}: <span className="text-white">{freeSpins}</span></div>
-          )}
-          {(ctaLabel && ctaLabel.trim()) && (
-            <a className="col-span-2 mt-1 inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out group-hover:scale-[1.03] hover:scale-[1.05]" href={href}>
-              {ctaLabel || labels?.cta || 'Récupérer mon Bonus'}
-            </a>
-          )}
-        </div>
-      )}
+      {/* Strip retirée côté liste: les infos sont dans la pop-up (icône i) */}
     </a>
   );
 }
