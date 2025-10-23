@@ -1,4 +1,6 @@
 "use client";
+import { useState } from "react";
+import { Modal } from "@/components/Modal";
 
 type Props = {
   href: string;
@@ -22,12 +24,13 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
   const hasCashback = !!(cashback && cashback.trim());
   const hasSpins = !!(freeSpins && freeSpins.trim());
   const hasAnyInfo = hasDeposit || hasBonus || hasCashback || hasSpins;
+  const [open, setOpen] = useState(false);
 
   return (
-    <a href={disabled ? undefined : href} target={disabled ? undefined : "_blank"} rel={disabled ? undefined : "nofollow noopener noreferrer"} className={`block group ${disabled ? "pointer-events-none" : ""}`}>
+    <div className={`block group ${disabled ? "pointer-events-none" : ""}`}>
       <div className={`w-full ${variant === "square" ? "aspect-square" : "h-[20vh] md:h-[24vh] lg:h-[28vh]"} flex items-center justify-center rounded-xl overflow-hidden relative group` }>
         {/* bouton info */}
-        <button type="button" className="absolute top-2 right-2 z-10 inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/90 text-black text-sm shadow hover:scale-105 transition" onClick={(e) => { e.preventDefault(); const dlg = (e.currentTarget.parentElement?.querySelector('.banner-info-dialog') as HTMLDialogElement|null); dlg?.showModal(); }} aria-label="Infos">
+        <button type="button" className="absolute top-2 right-2 z-10 inline-flex items-center justify-center w-7 h-7 rounded-full bg-white/90 text-black text-sm shadow hover:scale-105 transition" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(true); }} aria-label="Infos">
           i
         </button>
         {badge ? (
@@ -39,30 +42,34 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
           boxShadow: "inset 0 0 80px rgba(244,114,182,0.25), 0 0 50px rgba(251,191,36,0.35)",
           pointerEvents: 'none'
         }} />
-        <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} className={`w-full h-full ${variant === "square" ? "object-cover" : "object-contain"} transition-transform duration-300 ease-out group-hover:scale-[1.03]`} />
+        <a href={disabled ? undefined : href} target={disabled ? undefined : "_blank"} rel={disabled ? undefined : "nofollow noopener noreferrer"} className="absolute inset-0">
+          <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} className={`w-full h-full ${variant === "square" ? "object-cover" : "object-contain"} transition-transform duration-300 ease-out group-hover:scale-[1.03]`} />
+        </a>
       </div>
-      {/* dialog infos */}
-      <dialog className="banner-info-dialog rounded-xl border border-white/10 bg-[#0b1216] text-white/90 p-0 w-[min(92vw,560px)]">
-        <form method="dialog" className="p-3 border-b border-white/10 flex items-center justify-between">
-          <div className="font-semibold text-sm">{alt}</div>
-          <button className="text-white/70 hover:text-white">✕</button>
-        </form>
-        <div className="p-4 grid grid-cols-2 gap-3 text-sm">
+      {/* CTA sous la carte */}
+      {(ctaLabel && ctaLabel.trim()) && (
+        <a className="mt-2 inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out group-hover:scale-[1.03] hover:scale-[1.05]" href={href} target="_blank" rel="nofollow noopener noreferrer">
+          {ctaLabel || labels?.cta || 'Récupérer mon Bonus'}
+        </a>
+      )}
+
+      {/* Pop-up infos */}
+      <Modal open={open} onClose={() => setOpen(false)} title={alt}>
+        <div className="grid grid-cols-2 gap-3 text-sm">
           {hasDeposit ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.deposit ?? 'Dépôt'}: <span className="text-white">{depositMin}</span></div>) : null}
           {hasBonus ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.bonus ?? 'Bonus'}: <span className="text-white">{bonus}</span></div>) : null}
           {hasCashback ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.cashback ?? 'Cashback'}: <span className="text-white">{cashback}</span></div>) : null}
           {hasSpins ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.freeSpins ?? 'Free Spins'}: <span className="text-white">{freeSpins}</span></div>) : null}
         </div>
         {(ctaLabel && ctaLabel.trim()) ? (
-          <div className="p-3 border-t border-white/10">
-            <a className="inline-flex items-center justify-center w-full rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out hover:scale-[1.03]" href={href}>
+          <div className="mt-4">
+            <a className="inline-flex items-center justify-center w-full rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out hover:scale-[1.03]" href={href} target="_blank" rel="nofollow noopener noreferrer">
               {ctaLabel}
             </a>
           </div>
         ) : null}
-      </dialog>
-      {/* Strip retirée côté liste: les infos sont dans la pop-up (icône i) */}
-    </a>
+      </Modal>
+    </div>
   );
 }
 

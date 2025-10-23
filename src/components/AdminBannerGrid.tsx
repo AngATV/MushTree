@@ -45,16 +45,21 @@ export function AdminBannerGrid({ initial }: { initial: Banner[] }) {
   }
 
   async function persist() {
-    await fetch('/api/banners/reorder', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
-      body: JSON.stringify({ ids: items.map(i => i.id) })
-    });
-    router.refresh();
+    try {
+      const res = await fetch('/api/banners/reorder', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
+        body: JSON.stringify({ ids: items.map(i => i.id) })
+      });
+      if (!res.ok) throw new Error('reorder failed');
+      router.refresh();
+    } catch (e) {
+      alert('Échec de la sauvegarde de l\'ordre');
+    }
   }
 
   return (
     <div className="space-y-3">
-      <div className="text-sm text-white/60">Glissez-déposez pour réordonner. Cliquez “Enregistrer l’ordre”.</div>
+      <div className="text-sm text-white/60">Glissez-déposez pour réordonner. Cliquez « Enregistrer l’ordre ».</div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {items.map(b => (
           <div key={b.id} draggable onDragStart={(e) => onDragStart(e, b.id)} onDragOver={onDragOver} onDrop={(e) => onDrop(e, b.id)} className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-3">

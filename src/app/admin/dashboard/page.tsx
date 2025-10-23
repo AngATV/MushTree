@@ -55,23 +55,7 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Aperçu client</h2>
-        {top ? (
-          <div className="grid grid-cols-1 gap-6">
-            <BannerCard variant="wide" href="#" src={top.imageUrl} alt={top.title} disabled />
-          </div>
-        ) : (
-          <p className="text-white/60">Aucune bannière à prévisualiser.</p>
-        )}
-        {others.length ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {others.map((b) => (
-              <BannerCard key={b.id} variant="square" href="#" src={b.imageUrl} alt={b.title} disabled />
-            ))}
-          </div>
-        ) : null}
-      </div>
+      {null}
 
       <div>
         <h2 className="text-xl font-semibold mb-3">Bannières</h2>
