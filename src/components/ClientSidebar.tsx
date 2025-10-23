@@ -34,6 +34,7 @@ export default function ClientSidebar() {
       {/* texture subtile */}
       <div aria-hidden className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: `repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 12px)` }} />
       <div className="px-6 py-6 h-full flex flex-col">
+        <div className="mb-6 text-xl font-semibold bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 bg-clip-text text-transparent">mushway.bet</div>
         <div className="space-y-8">
         <div>
           <div className="text-[11px] uppercase tracking-wider text-white/50 mb-2">{lang === 'en' ? 'Navigation' : 'Navigation'}</div>
