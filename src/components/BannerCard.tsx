@@ -47,7 +47,6 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
           <img src={src} alt={alt} loading={priority ? "eager" : "lazy"} className={`w-full h-full ${variant === "square" ? "object-cover" : "object-contain"} transition-transform duration-300 ease-out group-hover:scale-[1.03]`} />
         </a>
       </div>
-<<<<<<< HEAD
       {/* CTA sous la carte */}
       {(ctaLabel && ctaLabel.trim()) && (
         <a className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out group-hover:scale-[1.01] hover:scale-[1.02]" href={href} target="_blank" rel="nofollow noopener noreferrer">
@@ -82,30 +81,6 @@ export function BannerCard({ href, src, alt, priority, badge, variant = "wide", 
         </div>
       </Modal>
     </div>
-=======
-      {/* dialog infos */}
-      <dialog className="banner-info-dialog rounded-xl border border-white/10 bg-[#0b1216] text-white/90 p-0 w-[min(92vw,560px)]">
-        <form method="dialog" className="p-3 border-b border-white/10 flex items-center justify-between">
-          <div className="font-semibold text-sm">{alt}</div>
-          <button className="text-white/70 hover:text-white">✕</button>
-        </form>
-        <div className="p-4 grid grid-cols-2 gap-3 text-sm">
-          {hasDeposit ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.deposit ?? 'Dépôt'}: <span className="text-white">{depositMin}</span></div>) : null}
-          {hasBonus ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.bonus ?? 'Bonus'}: <span className="text-white">{bonus}</span></div>) : null}
-          {hasCashback ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.cashback ?? 'Cashback'}: <span className="text-white">{cashback}</span></div>) : null}
-          {hasSpins ? (<div className="rounded-lg border border-white/10 px-3 py-2">{labels?.freeSpins ?? 'Free Spins'}: <span className="text-white">{freeSpins}</span></div>) : null}
-        </div>
-        {(ctaLabel && ctaLabel.trim()) ? (
-          <div className="p-3 border-t border-white/10">
-            <a className="inline-flex items-center justify-center w-full rounded-lg bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 text-black font-semibold px-4 py-2.5 shadow-[0_6px_24px_rgba(251,191,36,0.25)] transform transition-transform duration-300 ease-out hover:scale-[1.03]" href={href}>
-              {ctaLabel}
-            </a>
-          </div>
-        ) : null}
-      </dialog>
-      {/* Strip retirée côté liste: les infos sont dans la pop-up (icône i) */}
-    </a>
->>>>>>> 14f5128 (refactor(banner-card): remove redundant info and CTA display from BannerCard component for cleaner presentation)
   );
 }
 
