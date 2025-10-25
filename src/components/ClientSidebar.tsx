@@ -42,9 +42,9 @@ export default function ClientSidebar() {
             <a href={lang ? `/?lang=${encodeURIComponent(lang)}` : '/'} className="px-3 py-2 rounded-lg text-white/85 hover:text-white hover:bg-white/10">
               {lang === 'en' ? 'Casino offers' : 'Offres casino'}
             </a>
-            <span className="px-3 py-2 rounded-lg text-white/50">
-              {lang === 'en' ? 'Mini games (coming soon)' : 'Mini-jeux (à venir)'}
-            </span>
+            <a href={lang ? `/mini-jeux?lang=${encodeURIComponent(lang)}` : '/mini-jeux'} className="px-3 py-2 rounded-lg text-white/85 hover:text-white hover:bg-white/10">
+              {lang === 'en' ? 'Mini games' : 'Mini-jeux'}
+            </a>
           </nav>
         </div>
 
