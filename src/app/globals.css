@@ -53,6 +53,20 @@ body::after {
   overflow: hidden;
   z-index: -1;
 }
+
+/* Mini-jeux animations */
+@keyframes coinFlip {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(720deg); }
+}
+.anim-coin-flip { animation: coinFlip 700ms ease-out; transform-style: preserve-3d; }
+
+@keyframes dieSpin {
+  0%   { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(720deg) scale(1.08); }
+}
+.anim-die-spin { animation: dieSpin 700ms ease-in-out; }
+
 .bg-anim .spark {
   position: absolute;
   top: -20px;
