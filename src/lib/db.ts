@@ -7,6 +7,10 @@ export async function ensureSchema() {
     password TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
   );`;
+  // Champs supplémentaires pour le profil public et la monnaie virtuelle
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS username TEXT;`;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url TEXT;`;
+  await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS mush_coins INT DEFAULT 0;`;
   await sql`CREATE TABLE IF NOT EXISTS banners (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,

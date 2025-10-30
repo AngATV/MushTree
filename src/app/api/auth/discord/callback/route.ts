@@ -54,9 +54,14 @@ export async function GET(req: Request) {
     const profile = await userRes.json();
     const email = profile.email as string | undefined;
     const discordId = profile.id as string;
+    const username = (profile.global_name as string | undefined) || (profile.username as string | undefined) || "Discord User";
+    const avatarHash = profile.avatar as string | null;
+    const avatarUrl = avatarHash
+      ? `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png?size=128`
+      : `https://cdn.discordapp.com/embed/avatars/0.png`;
     const id = discordId;
-    await sql`INSERT INTO users (id, email, password) VALUES (${id}, ${email ?? `${discordId}@discord.local`}, ${"oauth"})
-             ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email`;
+    await sql`INSERT INTO users (id, email, password, username, avatar_url) VALUES (${id}, ${email ?? `${discordId}@discord.local`}, ${"oauth"}, ${username}, ${avatarUrl})
+             ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email, username = EXCLUDED.username, avatar_url = EXCLUDED.avatar_url`;
     await setSiteCookie({ userId: id, email: email ?? "discord" });
     const home = new URL("/", url.origin).toString();
     return Response.redirect(home, 302);

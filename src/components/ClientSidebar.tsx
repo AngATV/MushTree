@@ -13,6 +13,7 @@ export default function ClientSidebar() {
   const lang = sp?.get("lang") ?? (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('lang') : null);
   const pendingText = lang === 'en' ? 'coming soon' : 'à venir';
   const { data } = useSWR("/api/settings/social", fetcher, { revalidateOnFocus: false });
+  const { data: me } = useSWR("/api/me", fetcher, { revalidateOnFocus: false });
   const map: Record<string, string> = {};
   (data?.links || []).forEach((l: any) => { map[l.platform] = l.url; });
 
@@ -34,7 +35,16 @@ export default function ClientSidebar() {
       {/* texture subtile */}
       <div aria-hidden className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: `repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 12px)` }} />
       <div className="px-6 py-8 h-full flex flex-col">
-        <div className="mb-10 text-xl font-semibold bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 bg-clip-text text-transparent">mushway.bet</div>
+        <div className="mb-6 text-xl font-semibold bg-gradient-to-r from-amber-300 via-rose-400 to-fuchsia-500 bg-clip-text text-transparent">mushway.bet</div>
+        {me?.user ? (
+          <div className="mb-8 flex items-center gap-3 px-3 py-3 rounded-xl bg-white/10 border border-white/10">
+            <img src={me.user.avatarUrl || "https://cdn.discordapp.com/embed/avatars/0.png"} alt="avatar" className="w-10 h-10 rounded-full object-cover" />
+            <div className="min-w-0">
+              <div className="text-white/90 font-medium truncate">{me.user.username || me.user.email}</div>
+              <div className="text-xs text-white/60">{lang === 'en' ? 'MushCoins' : 'MushCoins'}: <span className="text-white/90 font-semibold">{me.user.mushCoins ?? 0}</span></div>
+            </div>
+          </div>
+        ) : null}
         <div className="space-y-8 flex-1 overflow-y-auto pr-1">
         <div>
           <div className="text-[11px] uppercase tracking-wider text-white/50 mb-2">{lang === 'en' ? 'Navigation' : 'Navigation'}</div>
@@ -83,12 +93,26 @@ export default function ClientSidebar() {
           {/* Auth public */}
           <div>
             <div className="text-[11px] uppercase tracking-wider text-white/50 mb-2">{lang === 'en' ? 'Account' : 'Compte'}</div>
-            <a href="/api/auth/discord/start" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[#5865F2] text-white/90 hover:text-white">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M20 4.5c-1.6-.7-3.4-1.2-5.2-1.3-.2.4-.4.9-.6 1.3-1.7-.2-3.4-.2-5.1 0-.2-.4-.4-.9-.6-1.3-1.8.1-3.6.6-5.2 1.3C1.5 8 1 11.4 1.2 14.7c2.2 1.6 4.4 2.5 6.6 2.8.5-.7 1-1.4 1.4-2.2-.8-.3-1.5-.7-2.2-1.2.2-.1.3-.2.5-.3 2.1 1 4.4 1 6.5 0 .2.1.4.2.5.3-.7.5-1.4.9-2.2 1.2.4.8.9 1.5 1.4 2.2 2.3-.3 4.5-1.2 6.7-2.8.3-3.3-.2-6.7-2-10.2z"/>
-              </svg>
-              <span>{lang === 'en' ? 'Sign in with Discord' : 'Se connecter avec Discord'}</span>
-            </a>
+            {me?.user ? (
+              <div className="space-y-2">
+                <div className="px-3 py-2 rounded-lg bg-white/10 text-white/85">
+                  {lang === 'en' ? 'Signed in as' : 'Connecté en tant que'} <span className="font-medium">{me.user.email}</span>
+                </div>
+                <button
+                  onClick={async () => { try { await fetch('/api/logout-site', { method: 'POST', credentials: 'include' }); } finally { window.location.reload(); } }}
+                  className="px-3 py-2 rounded-lg border border-white/20 text-white/85 hover:bg-white/10"
+                >
+                  {lang === 'en' ? 'Sign out' : 'Se déconnecter'}
+                </button>
+              </div>
+            ) : (
+              <a href="/api/auth/discord/start" className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[#5865F2] text-white/90 hover:text-white">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                  <path d="M20 4.5c-1.6-.7-3.4-1.2-5.2-1.3-.2.4-.4.9-.6 1.3-1.7-.2-3.4-.2-5.1 0-.2-.4-.4-.9-.6-1.3-1.8.1-3.6.6-5.2 1.3C1.5 8 1 11.4 1.2 14.7c2.2 1.6 4.4 2.5 6.6 2.8.5-.7 1-1.4 1.4-2.2-.8-.3-1.5-.7-2.2-1.2.2-.1.3-.2.5-.3 2.1 1 4.4 1 6.5 0 .2.1.4.2.5.3-.7.5-1.4.9-2.2 1.2.4.8.9 1.5 1.4 2.2 2.3-.3 4.5-1.2 6.7-2.8.3-3.3-.2-6.7-2-10.2z"/>
+                </svg>
+                <span>{lang === 'en' ? 'Sign in with Discord' : 'Se connecter avec Discord'}</span>
+              </a>
+            )}
           </div>
         </div>
 

@@ -60,9 +60,9 @@ export async function getSiteUserFromCookies() {
   if (!token) return null;
   const payload = verifyJwt(token);
   if (!payload) return null;
-  const { rows } = await sql<{ id: string; email: string }>`SELECT id, email FROM users WHERE id = ${payload.userId} LIMIT 1`;
+  const { rows } = await sql<{ id: string; email: string; username: string | null; avatar_url: string | null; mush_coins: number | null }>`SELECT id, email, username, avatar_url, mush_coins FROM users WHERE id = ${payload.userId} LIMIT 1`;
   const user = rows[0];
-  return user ? { id: user.id, email: user.email } : null;
+  return user ? { id: user.id, email: user.email, username: user.username, avatarUrl: user.avatar_url, mushCoins: user.mush_coins ?? 0 } : null;
 }
 
 export async function setSiteCookie(payload: JwtPayload) {
