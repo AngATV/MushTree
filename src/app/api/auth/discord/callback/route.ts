@@ -58,7 +58,8 @@ export async function GET(req: Request) {
     await sql`INSERT INTO users (id, email, password) VALUES (${id}, ${email ?? `${discordId}@discord.local`}, ${"oauth"})
              ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email`;
     await setSiteCookie({ userId: id, email: email ?? "discord" });
-    return Response.redirect("/", 302);
+    const home = new URL("/", url.origin).toString();
+    return Response.redirect(home, 302);
   } catch (e) {
     console.error("Discord OAuth error:", e);
     return new Response("Discord OAuth error", { status: 500 });
