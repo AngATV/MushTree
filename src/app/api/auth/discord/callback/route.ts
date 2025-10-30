@@ -56,8 +56,10 @@ export async function GET(req: Request) {
     const discordId = profile.id as string;
     const username = (profile.global_name as string | undefined) || (profile.username as string | undefined) || "Discord User";
     const avatarHash = profile.avatar as string | null;
+    const isAnimated = !!avatarHash && avatarHash.startsWith("a_");
+    const avatarExt = isAnimated ? "gif" : "png";
     const avatarUrl = avatarHash
-      ? `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png?size=128`
+      ? `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.${avatarExt}?size=128`
       : `https://cdn.discordapp.com/embed/avatars/0.png`;
     const id = discordId;
     await sql`INSERT INTO users (id, email, password, username, avatar_url) VALUES (${id}, ${email ?? `${discordId}@discord.local`}, ${"oauth"}, ${username}, ${avatarUrl})
